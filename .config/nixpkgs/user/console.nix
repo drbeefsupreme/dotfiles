@@ -1,11 +1,13 @@
 { config, lib, pkgs, ... }:
 
 {
-  programs.kitty = {
-    enable = true;
-  };
+  # programs.kitty = {
+  #   enable = true;
+  # };
+  # does not seem to work atm, installed via apt
+  # https://github.com/NixOS/nixpkgs/issues/80936
 
-  programs.fish = {
+  programs.fish = {             #
     enable = true;
 
     shellAliases = {
