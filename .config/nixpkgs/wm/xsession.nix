@@ -6,7 +6,7 @@
 
   programs.rofi = {
     enable = true;
-    terminal = "${pkgs.kitty}/bin/kitty";
+    #terminal = "${pkgs.kitty}/bin/kitty";
   };
 
   # xsession = {
@@ -25,4 +25,8 @@
   #     };
   #   };
   # };
+
+  # home.packages = with pkgs; [
+  #   nitrogen  #wallpaper
+  # ];
 }
