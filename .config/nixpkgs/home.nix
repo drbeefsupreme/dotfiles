@@ -24,7 +24,7 @@
     #./user/browsers.nix
     ./user/utilities.nix
     ./user/git.nix
-    #./user/console.nix
+    ./user/console.nix
     ./user/apps.nix
     ./user/emacs.nix
     ./user/trezor.nix
