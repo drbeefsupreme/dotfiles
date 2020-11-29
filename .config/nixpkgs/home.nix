@@ -12,8 +12,15 @@
   # You can update Home Manager without changing this value. See
   # the Home Manager release notes for a list of state version
   # changes in each release.
+
+
   home.stateVersion = "20.03";
   #home.username = "poprox";
+  home.sessionVariables = {
+    NIX_PATH = "/home/poprox/.nix-defexpr/channels:nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixpkgs:/nix/var/nix/profiles/per-user/root/channels";
+  };
+
+
   nixpkgs.config.allowUnfree = true;
 
   imports = [

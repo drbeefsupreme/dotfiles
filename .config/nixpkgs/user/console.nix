@@ -22,10 +22,9 @@
   programs.bash = {
     enable = true;
 
-    #extra commands run when initializing an int. shell
-    # initExtra = ''
-    #   #actually run fish instead of bash
-    #   exec fish
-    # '';
+    #extra commands run when initializing a login shell
+    #profileExtra = ''
+    #export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
+    #'';
   };
 }
