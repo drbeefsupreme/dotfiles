@@ -7,9 +7,9 @@
   # does not seem to work atm, installed via apt
   # https://github.com/NixOS/nixpkgs/issues/80936
 
-  programs.alacritty = {
-    enable = true;
-  };
+  # programs.alacritty = {
+  #   enable = true;
+  # };
 
   programs.fish = {             #
     enable = true;

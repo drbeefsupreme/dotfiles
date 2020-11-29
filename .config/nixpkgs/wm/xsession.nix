@@ -27,7 +27,7 @@
   # };
 
   home.packages = with pkgs; [
-  #   nitrogen  #wallpaper - doesn't make symlink?
+      nitrogen  #wallpaper - doesn't make symlink?
       xmobar
   ];
 }
