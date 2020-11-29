@@ -5,9 +5,15 @@ let
     "${lib.getLib stdenv.cc.cc}/lib"
     "${lib.getLib stdenv.glibc}/lib"
   ];
-  emacs-overlay = (import (builtins.fetchTarball {
-      url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
-    }) self super);
+
+  emacs-overlay =
+    let
+      src = builtins.fetchTarball
+        {
+          url = https://github.com/nix-community/emacs-overlay/archive/f7fbaaa9222dfb256955190a80002ea910098f0a.tar.gz;
+          sha256 = "19bkpwnnz4rybzqdc88i7p4ba44zbclz4si5ylpfnl664s0x9vnv";
+        };
+    in import src self super;
 in {
 
   emacsGccWrapped = super.symlinkJoin {
