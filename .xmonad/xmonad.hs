@@ -95,7 +95,7 @@ myFocusedBorderColor = "#f8c134" -- Flag Yellow
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- launch a terminal
-    [ ((modm .|. shiftMask, xK_t     ), spawn $ XMonad.terminal conf)
+    [ ((modm,               xK_t     ), spawn $ XMonad.terminal conf)
 
     -- launch dmenu
     , ((modm,               xK_p     ), spawn myAppLauncher)
@@ -143,7 +143,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_l     ), sendMessage Expand)
 
     -- Push window back into tiling
-    , ((modm,               xK_t     ), withFocused $ windows . W.sink)
+    , ((modm .|. shiftMask, xK_t     ), withFocused $ windows . W.sink)
 
     -- Increment the number of windows in the master area
     , ((modm              , xK_comma ), sendMessage (IncMasterN 1))
@@ -301,7 +301,7 @@ myLogHook = return ()
 
 myStartupHook = do
         spawnOnce "nitrogen --restore &"
-        --spawnOnce "compton &" -compositor
+        spawnOnce "picom &" --compositor
 
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
