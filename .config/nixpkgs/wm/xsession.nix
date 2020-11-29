@@ -32,6 +32,7 @@
   ];
 
 
+  # look in .config/picom
   # services = {
   #     picom = {
   #       enable = true;
