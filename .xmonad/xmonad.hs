@@ -19,6 +19,7 @@
 import XMonad
 import Data.Monoid
 import System.Exit
+import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
 import XMonad.Util.SpawnOnce
 import XMonad.Util.Run -- spawnPipe
@@ -37,7 +38,7 @@ myFocusFollowsMouse = True
 
 -- Width of the window border in pixels.
 --
-myBorderWidth   = 3
+myBorderWidth   = 5
 
 -- modMask lets you specify which modkey you want to use. The default
 -- is mod1Mask ("left alt").  You may also consider using mod3Mask
@@ -94,7 +95,7 @@ myFocusedBorderColor = "#f8c134" -- Flag Yellow
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- launch a terminal
-    [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
+    [ ((modm .|. shiftMask, xK_t     ), spawn $ XMonad.terminal conf)
 
     -- launch dmenu
     , ((modm,               xK_p     ), spawn myAppLauncher)
@@ -310,7 +311,8 @@ myStartupHook = do
 main = do
   xmproc0 <- spawnPipe "xmobar -x 0 /home/poprox/.config/xmobar/xmobarrc" --launch xmobar on monitor one
   -- xmproc1 <- spawnPipe "xmobar -x 1 /home/poprox/.config/xmobar/xmobarrc" --launch xmobar on monitor one
-  xmonad $ docks defaults
+  xmonad $ docks $ ewmh defaults{ handleEventHook = handleEventHook def <+> fullscreenEventHook }
+  -- ewmh defaults { ...  } is for opacity with picom
 
 -- A structure containing your configuration settings, overriding
 -- fields in the default config. Any you don't override, will
