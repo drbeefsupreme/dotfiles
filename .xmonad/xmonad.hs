@@ -44,6 +44,9 @@ myBorderWidth   = 2
 --
 myModMask       = mod4Mask
 
+
+myAppLauncher   = "exe=`dmenu_path | dmenu` && eval \"exec $exe\""
+
 -- NOTE: from 0.9.1 on numlock mask is set automatically. The numlockMask
 -- setting should be removed from configs.
 --
@@ -92,7 +95,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
 
     -- launch dmenu
-    , ((modm,               xK_p     ), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
+    , ((modm,               xK_p     ), spawn myAppLauncher)
 
     -- launch gmrun
     , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
