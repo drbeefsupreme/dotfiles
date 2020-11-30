@@ -263,6 +263,12 @@ images in the current buffer."
 (setq latex-run-command "pdflatex") ;;sets the default latex command to pdflatex
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;;     security        ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(setq auth-sources '("~/.authinfo.gpg"))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;    tramp             ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
