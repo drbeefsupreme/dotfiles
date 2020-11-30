@@ -11,26 +11,43 @@
   #   enable = true;
   # };
 
-  programs.fish = {             #
-    enable = true;
+  programs = {
+    fish = {
+      enable = true;
 
-    shellAliases = {
-      config = "git --git-dir=$HOME/.cfg/ --work-tree=$HOME";
+      interactiveShellInit = ''
+        neofetch
+      '';
+
+      shellAliases = {
+        config = "git --git-dir=$HOME/.cfg/ --work-tree=$HOME";
+        neofetch = "ncneofetch";
+      };
+
+      # functions = {
+      #   fish_prompt = {
+      #     body = "eval $GOPATH/bin/powerline-go -error $status -shell bare";
+      #   };
+      # };
+
+      promptInit = ''
+        function fish_prompt
+          eval powerline-go -error $status -shell bare
+        end
+      '';
     };
-  };
 
-  programs.bash = {
-    enable = true;
+    bash.enable = true;
 
-    #extra commands run when initializing a login shell
-    #profileExtra = ''
-    #export NIX_PATH=$HOME/.nix-defexpr/channels${NIX_PATH:+:}$NIX_PATH
-    #'';
+    #powerline-go.enable = true;
   };
 
 
   #console apps
   home.packages = with pkgs; [
-    ranger
+    mlocate  #find file
+    #powerline-fonts  #fonts with nix seem like a bad idea
+    powerline-go  #cool prompt
+    ranger   #file explorer
   ];
 }
