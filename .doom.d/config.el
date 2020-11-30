@@ -148,8 +148,8 @@ images in the current buffer."
 ;;    org-roam       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;
 
-(setq org-roam-directory "~/Dropbox/org-mode/roam")
-(add-hook 'after-init-hook 'org-roam-mode)
+;;(setq org-roam-directory "~/Dropbox/org-mode/roam")
+;;(add-hook 'after-init-hook 'org-roam-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;;     Magit         ;;
