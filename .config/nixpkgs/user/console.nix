@@ -51,10 +51,12 @@
 
   #console apps
   home.packages = with pkgs; [
+    ffmpegthumbnailer  #video previews
     lsd  #ls deluxe
     mlocate  #find file
     #powerline-fonts  #fonts with nix seem like a bad idea
     powerline-go  #cool prompt
     ranger   #file explorer
+    w3m     #terminal web browser + images for ranger
   ];
 }
