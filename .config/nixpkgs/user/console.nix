@@ -22,6 +22,12 @@
       shellAliases = {
         config = "git --git-dir=$HOME/.cfg/ --work-tree=$HOME";
         neofetch = "ncneofetch";
+
+        ls = "lsd";
+        l = "ls -l";
+        la = "ls -a";
+        lla = "ls -la";
+        lt = "ls --tree";
       };
 
       # functions = {
@@ -45,6 +51,7 @@
 
   #console apps
   home.packages = with pkgs; [
+    lsd  #ls deluxe
     mlocate  #find file
     #powerline-fonts  #fonts with nix seem like a bad idea
     powerline-go  #cool prompt
