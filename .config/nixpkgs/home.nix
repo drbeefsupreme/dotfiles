@@ -28,6 +28,7 @@
     ./machine/syzygyzer.nix
     #./role/xsettings.nix
     ./role/pgp.nix
+    #./wm/polybar.nix
     ./wm/xsession.nix
     #./user/browsers.nix
     ./user/utilities.nix

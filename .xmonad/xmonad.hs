@@ -19,13 +19,17 @@
 import XMonad
 import Data.Monoid
 import System.Exit
+import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
 import XMonad.Util.SpawnOnce
 import XMonad.Util.Run -- spawnPipe
 
-import qualified XMonad.StackSet as W
-import qualified Data.Map        as M
+import qualified Codec.Binary.UTF8.String   as UTF8
+import qualified Data.Map                   as M
+import qualified XMonad.DBus                as D
+import qualified XMonad.DBus.Client         as D
+import qualified XMonad.StackSet            as W
 
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
@@ -88,6 +92,11 @@ myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
 --
 myNormalBorderColor  = "#000000"
 myFocusedBorderColor = "#f8c134" -- Flag Yellow
+gray                 = "#7F7F7F"
+gray2                = "#222222"
+red                  = "#900000"
+blue                 = "#2E9AFE"
+white                = "#eeeeee"
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
@@ -282,7 +291,29 @@ myEventHook = mempty
 -- It will add EWMH logHook actions to your custom log hook by
 -- combining it with ewmhDesktopsLogHook.
 --
-myLogHook = return ()
+-- myLogHook = return ()
+myLogHook :: D.Client -> PP --PP alows user to customize the formatting of status info
+myLogHook dbus = def
+    { ppOutput = dbusOutput dbus
+    , ppCurrent = wrap ("%{F" ++ blue ++ "} ") " %{F-}"
+    , ppVisible = wrap ("%{F" ++ gray ++ "} ") " %{F-}"
+    , ppUrgent = wrap ("%{F" ++ red ++ "} ") " %{F-}"
+    , ppHidden = wrap ("%{F" ++ gray ++ "} ") " %{F-}"
+    , ppTitle = wrap ("%{F" ++ gray2 ++ "} ") " %{F-}"
+    }
+
+dbusOutput :: D.Client -> String -> IO ()
+dbusOutput dbus str = do
+    let signal = (D.signal objectPath interfaceName memberName) {
+            D.signalBody = [D.toVariant $ UTF8.decodeString str]
+        }
+    D.emit dbus signal
+  where
+    objectPath = D.objectPath_ "/org/xmonad/Log"
+    interfaceName = D.interfaceName_ "org.xmonad.Log"
+    memberName = D.memberName_ "Update"
+
+
 
 ------------------------------------------------------------------------
 -- Startup hook
@@ -308,10 +339,20 @@ myStartupHook = do
 
 -- Run xmonad with the settings you specify. No need to modify this.
 --
+main :: IO ()
 main = do
-  xmproc0 <- spawnPipe "xmobar -x 0 /home/poprox/.config/xmobar/xmobarrc" --launch xmobar on monitor one
+  -- xmproc0 <- spawnPipe "xmobar -x 0 /home/poprox/.config/xmobar/xmobarrc" --launch xmobar on monitor one
   -- xmproc1 <- spawnPipe "xmobar -x 1 /home/poprox/.config/xmobar/xmobarrc" --launch xmobar on monitor one
-  xmonad $ docks $ ewmh defaults{ handleEventHook = handleEventHook def <+> fullscreenEventHook }
+  dbus <- D.connectSession
+  -- Request access to the DBus name
+  D.requestName dbus (D.busName_ "org.xmonad.Log")
+        [D.nameAllowReplacement, D.nameReplaceExisting, D.nameDoNotQueue]
+
+  xmonad $ docks $ ewmh defaults
+        { handleEventHook = handleEventHook def <+> fullscreenEventHook -- what does this do?
+        , logHook = dynamicLogWithPP (myLogHook dbus) --get polybar going
+        }
+
   -- ewmh defaults { ...  } is for opacity with picom
 
 -- A structure containing your configuration settings, overriding
