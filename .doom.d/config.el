@@ -155,6 +155,16 @@ images in the current buffer."
 ;;     Magit         ;;
 ;;;;;;;;;;;;;;;;;;;;;;;
 
+;;fixes:
+;;Warning (with-editor): Cannot determine a suitable Emacsclient
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Determining an Emacsclient executable suitable for the                                      ;;
+;; current Emacs instance failed.  For more information                                        ;;
+;; please see https://github.com/magit/magit/wiki/Emacsclient. Disable showing Disable logging ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(setq-default with-editor-emacsclient-executable "emacsclient")
+
 ;;  magit status buffer appears in current window
 (setq magit-display-buffer-function
       (lambda (buffer)

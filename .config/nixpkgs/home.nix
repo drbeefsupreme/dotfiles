@@ -38,5 +38,5 @@
     ./user/trezor.nix
  ];
 
-  nixpkgs.overlays = [ (import ./overlays/emacsGcc.nix) ];
+  nixpkgs.overlays = [ (import ./overlays/emacsGcc.nix) (import ./overlays/discord.nix) ];
 }
