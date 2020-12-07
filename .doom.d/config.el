@@ -163,9 +163,9 @@ images in the current buffer."
 ;; please see https://github.com/magit/magit/wiki/Emacsclient. Disable showing Disable logging ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(setq-default with-editor-emacsclient-executable "emacsclient")
+;;(setq-default with-editor-emacsclient-executable "emacsclient")
 
-;;  magit status buffer appears in current window
+;;magit status buffer appears in current window
 (setq magit-display-buffer-function
       (lambda (buffer)
         (display-buffer
@@ -180,7 +180,7 @@ images in the current buffer."
                   '(display-buffer-same-window)))))
 
 (add-hook 'after-save-hook 'magit-after-save-refresh-status t) ;refreshes magit automatically
-(magit-auto-revert-mode) ;refreshes buffers after changing branch
+;; (magit-auto-revert-mode) ;refreshes buffers after changing branch ;;I think this was breaking something
 
 ;;
 
