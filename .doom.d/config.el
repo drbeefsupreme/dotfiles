@@ -148,8 +148,16 @@ images in the current buffer."
 ;;    org-roam       ;;
 ;;;;;;;;;;;;;;;;;;;;;;;
 
-;;(setq org-roam-directory "~/Dropbox/org-mode/roam")
-;;(add-hook 'after-init-hook 'org-roam-mode)
+(setq org-roam-directory "~/Dropbox/org-mode/roam")
+(setq org-roam-buffer-position 'top)
+(add-hook 'after-init-hook 'org-roam-mode)
+
+;;daily journals
+
+(setq org-roam-dailies-capture-templates
+      '(("d" "default" entry #'org-roam-capture--get-point
+         "* %?" :file-name "daily/%<%Y-%m-%d>"
+         :head "#+title: %<%Y-%m-%d>\n")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;
 ;;     Magit         ;;

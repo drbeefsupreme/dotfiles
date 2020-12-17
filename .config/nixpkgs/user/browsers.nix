@@ -5,5 +5,6 @@
     brave
     google-chrome
     firefox
+    tor-browser-bundle-bin
   ];
 }

@@ -17,6 +17,9 @@
     #shelly things
     xclip
 
+    #graphics
+    graphviz   #programming language for graphs
+
     #jokes
     fortune
 
