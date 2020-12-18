@@ -21,6 +21,7 @@ import Data.Monoid
 import System.Exit
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
+import XMonad.Layout.ThreeColumns
 import XMonad.Util.SpawnOnce
 import XMonad.Util.Run -- spawnPipe
 
@@ -221,10 +222,11 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
 --
-myLayout = avoidStruts (tiled ||| Mirror tiled ||| Full)
+myLayout = avoidStruts (tiled ||| Mirror tiled ||| threeCol ||| Full)
   where
     -- default tiling algorithm partitions the screen into two panes
-    tiled   = Tall nmaster delta ratio
+    tiled       = Tall nmaster delta ratio
+    threeCol    = ThreeCol nmaster delta ratio
 
     -- The default number of windows in the master pane
     nmaster = 1
