@@ -7,6 +7,9 @@
 ;;    GENERAL       ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;
 
+;;emacs
+(server-start) ;;starts emacs in server mode so it doesn't die when last frame is closed
+
 ;;loading own modules
 (load! "+bindings")
 (load! "+private")
