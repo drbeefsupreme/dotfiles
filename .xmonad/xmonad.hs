@@ -25,9 +25,10 @@ import System.Exit
 import Data.Monoid
 
     -- Actions
-import XMonad.Actions.WithAll
+import XMonad.Actions.CycleWS
 import XMonad.Actions.Promote
 import XMonad.Actions.RotSlaves (rotSlavesDown, rotAllDown)
+import XMonad.Actions.WithAll
 
     -- Hooks
 import XMonad.Hooks.EwmhDesktops
@@ -157,6 +158,12 @@ myKeys =
         --Inc/dec windows in master pane or stack
         , ("M-,", sendMessage (IncMasterN 1))   --Increment # of windows in master area
         , ("M-.", sendMessage (IncMasterN (-1))) --Decrement # of windows in master area
+
+        --Workspace navigation
+        --, ("M-S-s", prevScreen)                   --View previous screen - does the same as the screenWorkspace commands below
+        --, ("M-S-d", nextScreen)                   --View next screen - but also doesn't work in the same way
+        , ("M-s", swapPrevScreen)             --Swap current screen with previous screen
+        , ("M-d", swapNextScreen)             --Swap current screen with next screen
         ]
 
 
