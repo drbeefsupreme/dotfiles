@@ -16,13 +16,29 @@
 
 -- IMPORTS
 
+    -- Base
 import XMonad
-import Data.Monoid
 import System.Exit
+
+    -- Data
+
+import Data.Monoid
+
+    -- Actions
+import XMonad.Actions.WithAll
+import XMonad.Actions.Promote
+import XMonad.Actions.RotSlaves (rotSlavesDown, rotAllDown)
+
+    -- Hooks
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
+
+    -- Layout
+import XMonad.Layout.ResizableTile
 import XMonad.Layout.ThreeColumns
-import XMonad.Util.EZConfig
+
+    -- Util
+import XMonad.Util.EZConfig (additionalKeysP)
 import XMonad.Util.SpawnOnce
 import XMonad.Util.Run -- spawnPipe
 
@@ -97,15 +113,14 @@ myFocusedBorderColor = "#f8c134" -- Flag Yellow
 
 --Super is M, Alt is M1, Shift is S, Ctrl is C
 --Space, Tab, Backspace, Up/Down/Left/Right are all <XXX>
-myKeysEZ :: String -> [([Char], X ())]
-myKeysEZ home =
-        [
+myKeys :: [([Char], X ())]
+myKeys =
         --Xmonad
-          ("M-q", spawn "xmonad --recompile; xmonad --restart") --Restart Xmonad
+        [ ("M-q", spawn "xmonad --recompile; xmonad --restart") --Restart Xmonad
         , ("M-S-q", io (exitWith ExitSuccess))                  --Exit Xmonad
 
         --Program launch keybindings
-        , ("M-t", spawn $ Xmonad.terminal conf) -- launch a terminal
+        --, ("M-t", spawn $ Xmonad.terminal conf) -- launch a terminal
         , ("M-p", spawn myAppLauncher)          -- launch dmenu
         --insert emacs
 
@@ -115,7 +130,7 @@ myKeysEZ home =
 
         --Layouts
         , ("M-<Space>", sendMessage NextLayout) --Rotate through available layouts
-        , ("M-S-<Space>", setLayout $ XMonad.layoutHook conf) --Reset layouts to default
+        --, ("M-S-<Space>", setLayout $ XMonad.layoutHook conf) --Reset layouts to default
 
         --Window resizing
         , ("M-n", refresh)                      --Resize viewed windows to the correct size
@@ -130,8 +145,8 @@ myKeysEZ home =
         , ("M-k", windows W.focusUp)            --Move focus to the previous window
         , ("M-m", windows W.focusMaster)        --Move focus to the master window
         , ("M-S-m", windows W.swapMaster)       --Swap focused window with master window
-        , ("M-S-j", windows swapDown)           --Swap focused window with next window
-        , ("M-S-k", windows swapUp)             --Swap focused window with previous window
+        , ("M-S-j", windows W.swapDown)         --Swap focused window with next window
+        , ("M-S-k", windows W.swapUp)           --Swap focused window with previous window
         , ("M-<Backspace>", promote)            --Moves focused window to master, others maintain order
         , ("M-S-<Tab>", rotSlavesDown)          --Rotate all windows except master and keep focus in place
         , ("M-C-<Tab>", rotAllDown)             --Rotate all windows in the current stack
@@ -141,108 +156,30 @@ myKeysEZ home =
 
         --Inc/dec windows in master pane or stack
         , ("M-,", sendMessage (IncMasterN 1))   --Increment # of windows in master area
-        , ("M-.", sendMessage (InMasterN (-1))) --Decrement # of windows in master area
+        , ("M-.", sendMessage (IncMasterN (-1))) --Decrement # of windows in master area
         ]
 
 
-
-        ++ --Workspaces
+        --Workspaces
+        ++
+        --Change to workspace k
         [("M-" ++ enumFrom k, windows $ W.greedyView f) | (k, f) <- zip ['1' .. '9'] myWorkspaces]
-
-
-
-
-myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
-
-    -- launch a terminal
-    [ ((modm,               xK_t     ), spawn $ XMonad.terminal conf)
-
-    -- launch dmenu
-    , ((modm,               xK_p     ), spawn myAppLauncher)
-
-    -- launch gmrun
-    , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
-
-    -- close focused window
-    , ((modm .|. shiftMask, xK_c     ), kill)
-
-     -- Rotate through the available layout algorithms
-    , ((modm,               xK_space ), sendMessage NextLayout)
-
-    --  Reset the layouts on the current workspace to default
-    , ((modm .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
-
-    -- Resize viewed windows to the correct size
-    , ((modm,               xK_n     ), refresh)
-
-    -- Move focus to the next window
-    , ((modm,               xK_Tab   ), windows W.focusDown)
-
-    -- Move focus to the next window
-    , ((modm,               xK_j     ), windows W.focusDown)
-
-    -- Move focus to the previous window
-    , ((modm,               xK_k     ), windows W.focusUp  )
-
-    -- Move focus to the master window
-    , ((modm,               xK_m     ), windows W.focusMaster  )
-
-    -- Swap the focused window and the master window
-    , ((modm,               xK_Return), windows W.swapMaster)
-
-    -- Swap the focused window with the next window
-    , ((modm .|. shiftMask, xK_j     ), windows W.swapDown  )
-
-    -- Swap the focused window with the previous window
-    , ((modm .|. shiftMask, xK_k     ), windows W.swapUp    )
-
-    -- Shrink the master area
-    , ((modm,               xK_h     ), sendMessage Shrink)
-
-    -- Expand the master area
-    , ((modm,               xK_l     ), sendMessage Expand)
-
-    -- Push window back into tiling
-    , ((modm .|. shiftMask, xK_t     ), withFocused $ windows . W.sink)
-
-    -- Increment the number of windows in the master area
-    , ((modm              , xK_comma ), sendMessage (IncMasterN 1))
-
-    -- Deincrement the number of windows in the master area
-    , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
-
-    -- Toggle the status bar gap
-    -- Use this binding with avoidStruts from Hooks.ManageDocks.
-    -- See also the statusBar function from Hooks.DynamicLog.
-    --
-    -- , ((modm              , xK_b     ), sendMessage ToggleStruts)
-
-    -- Quit xmonad
-    , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
-
-    -- Restart xmonad
-    , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
-    ]
-    ++
-
-    --
-    -- mod-[1..9], Switch to workspace N
-    --
-    -- mod-[1..9], Switch to workspace N
-    -- mod-shift-[1..9], Move client to workspace N
-    --
-    [((m .|. modm, k), windows $ f i)
-        | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
-        , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
-    ++
-
-    --
-    -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
-    -- mod-shift-{w,e,r}, Move client to screen 1, 2, or 3
-    --
-    [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
-        | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
-        , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+        ++
+        --Send window to workspace k
+        [("M-S-" ++ enumFrom k, windows $ W.shift f) | (k, f) <- zip ['1' .. '9'] myWorkspaces]
+        ++
+        --M-{w,e} - Switch to screen 2 or 1
+        --M-S-{w,e} - Move window to screen 2 or 1
+        [(mask ++ "M-" ++ [key], screenWorkspace scr >>= flip whenJust (windows . action))
+            | (key, scr) <- zip "we" [1,0]
+            , (action, mask) <- [(W.view, ""), (W.shift, "S-")]
+        ]
+--     -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
+--     -- mod-shift-{w,e,r}, Move client to screen 1, 2, or 3
+--     --
+--     [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
+--         | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
+--         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
 
 ------------------------------------------------------------------------
@@ -394,7 +331,7 @@ defaults = defaultConfig {
         focusedBorderColor = myFocusedBorderColor,
 
       -- key bindings
-        keys               = myKeys,
+      -- keys               = myKeys,  --used for old keybinding scheme
         mouseBindings      = myMouseBindings,
 
       -- hooks, layouts
@@ -403,4 +340,4 @@ defaults = defaultConfig {
         handleEventHook    = myEventHook,
         logHook            = myLogHook,
         startupHook        = myStartupHook
-    }
+    } `additionalKeysP` myKeys
