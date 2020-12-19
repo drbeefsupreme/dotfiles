@@ -22,6 +22,7 @@ import System.Exit
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
 import XMonad.Layout.ThreeColumns
+import XMonad.Util.EZConfig
 import XMonad.Util.SpawnOnce
 import XMonad.Util.Run -- spawnPipe
 
@@ -93,6 +94,64 @@ myFocusedBorderColor = "#f8c134" -- Flag Yellow
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
 --
+
+--Super is M, Alt is M1, Shift is S, Ctrl is C
+--Space, Tab, Backspace, Up/Down/Left/Right are all <XXX>
+myKeysEZ :: String -> [([Char], X ())]
+myKeysEZ home =
+        [
+        --Xmonad
+          ("M-q", spawn "xmonad --recompile; xmonad --restart") --Restart Xmonad
+        , ("M-S-q", io (exitWith ExitSuccess))                  --Exit Xmonad
+
+        --Program launch keybindings
+        , ("M-t", spawn $ Xmonad.terminal conf) -- launch a terminal
+        , ("M-p", spawn myAppLauncher)          -- launch dmenu
+        --insert emacs
+
+        --Kill windows
+        , ("M-S-c", kill)                       --close focused window
+        , ("M-S-a", killAll)                    --kill all windows in workspace
+
+        --Layouts
+        , ("M-<Space>", sendMessage NextLayout) --Rotate through available layouts
+        , ("M-S-<Space>", setLayout $ XMonad.layoutHook conf) --Reset layouts to default
+
+        --Window resizing
+        , ("M-n", refresh)                      --Resize viewed windows to the correct size
+        , ("M-h", sendMessage Shrink)           --Shrink horiz window width
+        , ("M-l", sendMessage Expand)           --Expand horiz window width
+        , ("M-M1-h", sendMessage MirrorShrink)  --Shrink vert window width
+        , ("M-M1-l", sendMessage MirrorExpand)  --Expand vert window width
+
+        --Windows navigation
+        , ("M-<Tab>", windows W.focusDown)      --Move focus to the next window
+        , ("M-j", windows W.focusDown)          --Move focus to the next window
+        , ("M-k", windows W.focusUp)            --Move focus to the previous window
+        , ("M-m", windows W.focusMaster)        --Move focus to the master window
+        , ("M-S-m", windows W.swapMaster)       --Swap focused window with master window
+        , ("M-S-j", windows swapDown)           --Swap focused window with next window
+        , ("M-S-k", windows swapUp)             --Swap focused window with previous window
+        , ("M-<Backspace>", promote)            --Moves focused window to master, others maintain order
+        , ("M-S-<Tab>", rotSlavesDown)          --Rotate all windows except master and keep focus in place
+        , ("M-C-<Tab>", rotAllDown)             --Rotate all windows in the current stack
+
+        --Floating windows
+        , ("M-S-t", withFocused $ windows . W.sink)  --Push floating window back to tile
+
+        --Inc/dec windows in master pane or stack
+        , ("M-,", sendMessage (IncMasterN 1))   --Increment # of windows in master area
+        , ("M-.", sendMessage (InMasterN (-1))) --Decrement # of windows in master area
+        ]
+
+
+
+        ++ --Workspaces
+        [("M-" ++ enumFrom k, windows $ W.greedyView f) | (k, f) <- zip ['1' .. '9'] myWorkspaces]
+
+
+
+
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- launch a terminal
