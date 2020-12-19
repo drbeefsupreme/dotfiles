@@ -49,6 +49,10 @@ import qualified Data.Map        as M
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
+myEditor :: String
+myEditor = "emacsclient --createframe --alternate-editor emacs"  -- Sets emacs as editor
+
+myTerminal :: String
 myTerminal      = "alacritty"
 
 -- Whether focus follows the mouse pointer.
@@ -122,8 +126,10 @@ myKeys =
 
         --Program launch keybindings
         --, ("M-t", spawn $ Xmonad.terminal conf) -- launch a terminal
-        , ("M-p", spawn myAppLauncher)          -- launch dmenu
-        --insert emacs
+        , ("M-p", spawn myAppLauncher)                  -- launch dmenu
+        , ("M-e e", spawn "emacsclient -c -a 'emacs'")  --start emacs
+        , ("M-e b", spawn "emacsclient -c -a 'emacs' --eval '(ibuffer)'")   --list emacs buffers
+        , ("M-e d", spawn "emacsclient -c -a 'emacs' --eval '(dired nil)'") --dired emacs file manager
 
         --Kill windows
         , ("M-S-c", kill)                       --close focused window
@@ -174,13 +180,13 @@ myKeys =
         ++
         --Send window to workspace k
         [("M-S-" ++ enumFrom k, windows $ W.shift f) | (k, f) <- zip ['1' .. '9'] myWorkspaces]
-        ++
+        -- ++
         --M-{w,e} - Switch to screen 2 or 1
         --M-S-{w,e} - Move window to screen 2 or 1
-        [(mask ++ "M-" ++ [key], screenWorkspace scr >>= flip whenJust (windows . action))
-            | (key, scr) <- zip "we" [1,0]
-            , (action, mask) <- [(W.view, ""), (W.shift, "S-")]
-        ]
+        -- [(mask ++ "M-" ++ [key], screenWorkspace scr >>= flip whenJust (windows . action))
+        --     | (key, scr) <- zip "we" [1,0]
+        --     , (action, mask) <- [(W.view, ""), (W.shift, "S-")]
+        -- ]
 --     -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
 --     -- mod-shift-{w,e,r}, Move client to screen 1, 2, or 3
 --     --
@@ -304,9 +310,11 @@ myLogHook = return ()
 -- hook by combining it with ewmhDesktopsStartup.
 --
 
+myStartupHook :: X ()
 myStartupHook = do
         spawnOnce "nitrogen --restore &"
         spawnOnce "picom &" --compositor
+        spawnOnce "emacs --daemon &"
 
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
