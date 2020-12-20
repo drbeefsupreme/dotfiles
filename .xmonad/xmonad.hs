@@ -125,7 +125,7 @@ myKeys =
         , ("M-S-q", io (exitWith ExitSuccess))                  --Exit Xmonad
 
         --Program launch keybindings
-        --, ("M-t", spawn $ Xmonad.terminal conf) -- launch a terminal
+        , ("M-t", spawn myTerminal) -- launch a terminal
         , ("M-p", spawn myAppLauncher)                  -- launch dmenu
         , ("M-e e", spawn "emacsclient -c -a 'emacs'")  --start emacs
         , ("M-e b", spawn "emacsclient -c -a 'emacs' --eval '(ibuffer)'")   --list emacs buffers
