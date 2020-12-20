@@ -130,7 +130,7 @@ myKeys =
         , ("M-e e", spawn "emacsclient -c -a 'emacs'")  --start emacs
         , ("M-e b", spawn "emacsclient -c -a 'emacs' --eval '(ibuffer)'")   --list emacs buffers
         , ("M-e d", spawn "emacsclient -c -a 'emacs' --eval '(dired nil)'") --dired emacs file manager
-        , ("M-e j", spawn "emacsclient -c -a 'emacs' --eval '(org-roam-dailies-capture-today)'")
+        , ("M-e t", spawn "emacsclient -c -a 'emacs' --eval '(make-capture-frame)'")
 
         --Kill windows
         , ("M-S-c", kill)                       --close focused window

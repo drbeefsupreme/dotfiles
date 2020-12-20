@@ -304,3 +304,38 @@ images in the current buffer."
     (setq-local magit-git-executable path)))
 (setq tramp-verbose 10) ;;wtf is going on with tramp
 (setq tramp-copy-size-limit nil) ;makes it so you always use scp instead of ssh for TRAMP
+
+
+;;;;;;;;;;;;
+;; xmonad ;;
+;;;;;;;;;;;;
+
+
+(defadvice org-capture-finalize
+    (after delete-capture-frame activate)
+  "Advise capture-destroy to close the frame"
+  (if (equal "capture" (frame-parameter nil 'name))
+      (delete-frame)))
+
+(defadvice org-capture-destroy
+    (after delete-capture-frame activate)
+  "Advise capture-destroy to close the frame"
+  (if (equal "capture" (frame-parameter nil 'name))
+      (delete-frame)))
+
+
+;; make the frame contain a single window. by default org-capture
+;; splits the window
+(add-hook 'org-roam-dailies-find-file-hook
+          'delete-other-windows)
+
+(defun make-capture-frame ()
+  "Create a new frame and run org-capture."
+  (interactive)
+  (make-frame '((name . "capture")
+                (width . 120)
+                (height . 15)))
+  (select-frame-by-name "capture")
+  (setq word-wrap 1)
+  (setq truncate-lines nil)
+  (org-roam-dailies-capture-today))
