@@ -61,6 +61,7 @@ myFocusFollowsMouse = False
 
 -- Width of the window border in pixels.
 --
+myBorderWidth :: Dimension
 myBorderWidth   = 5
 
 -- modMask lets you specify which modkey you want to use. The default
@@ -68,9 +69,10 @@ myBorderWidth   = 5
 -- ("right alt"), which does not conflict with emacs keybindings. The
 -- "windows key" is usually mod4Mask.
 --
+myModMask :: KeyMask
 myModMask       = mod4Mask
 
-
+myAppLauncher :: [Char]
 myAppLauncher   = "exe=`dmenu_path | dmenu` && eval \"exec $exe\""
 
 -- NOTE: from 0.9.1 on numlock mask is set automatically. The numlockMask
@@ -105,11 +107,14 @@ myAppLauncher   = "exe=`dmenu_path | dmenu` && eval \"exec $exe\""
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
+myWorkspaces :: [[Char]]
 myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
 
 -- Border colors for unfocused and focused windows, respectively.
 --
+myNormalBorderColor :: [Char]
 myNormalBorderColor  = "#000000"
+myFocusedBorderColor :: [Char]
 myFocusedBorderColor = "#f8c134" -- Flag Yellow
 
 ------------------------------------------------------------------------
@@ -199,6 +204,7 @@ myKeys =
 ------------------------------------------------------------------------
 -- Mouse bindings: default actions bound to mouse events
 --
+myMouseBindings :: XConfig l -> M.Map (KeyMask, Button) (Window -> X ())
 myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- mod-button1, Set the window to floating mode and move by dragging
@@ -232,6 +238,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
 --
+--how do i get the type sig here?
 myLayout = avoidStruts (tiled ||| Mirror tiled ||| threeCol ||| Full)
   where
     -- default tiling algorithm partitions the screen into two panes
@@ -262,6 +269,7 @@ myLayout = avoidStruts (tiled ||| Mirror tiled ||| threeCol ||| Full)
 -- To match on the WM_NAME, you can use 'title' in the same way that
 -- 'className' and 'resource' are used below.
 --
+myManageHook :: XMonad.Query (Data.Monoid.Endo WindowSet)
 myManageHook = composeAll
     [ className =? "MPlayer"        --> doFloat
     , className =? "Gimp"           --> doFloat
@@ -280,6 +288,7 @@ myManageHook = composeAll
 -- It will add EWMH event handling to your custom event hooks by
 -- combining them with ewmhDesktopsEventHook.
 --
+myEventHook :: Event -> X All
 myEventHook = mempty
 
 ------------------------------------------------------------------------
@@ -294,6 +303,7 @@ myEventHook = mempty
 -- It will add EWMH logHook actions to your custom log hook by
 -- combining it with ewmhDesktopsLogHook.
 --
+myLogHook :: X ()
 myLogHook = return ()
 
 ------------------------------------------------------------------------
@@ -322,9 +332,10 @@ myStartupHook = do
 
 -- Run xmonad with the settings you specify. No need to modify this.
 --
+main :: IO ()
 main = do
   xmproc0 <- spawnPipe "xmobar -x 0 /home/poprox/.config/xmobar/xmobarrc" --launch xmobar on monitor one
-  -- xmproc1 <- spawnPipe "xmobar -x 1 /home/poprox/.config/xmobar/xmobarrc" --launch xmobar on monitor one
+  xmproc1 <- spawnPipe "xmobar -x 1 /home/poprox/.config/xmobar/xmobarrc" --launch xmobar on monitor one
   xmonad $ docks $ ewmh defaults{ handleEventHook = handleEventHook def <+> fullscreenEventHook }
   -- ewmh defaults { ...  } is for opacity with picom
 
@@ -334,6 +345,7 @@ main = do
 --
 -- No need to modify this.
 --
+--how do i do the type sig here?
 defaults = defaultConfig {
       -- simple stuff
         terminal           = myTerminal,
