@@ -311,6 +311,8 @@ images in the current buffer."
 ;;;;;;;;;;;;
 
 
+;;the following is mostly for org-roam-dailies-capture from xmonad
+
 (defadvice org-capture-finalize
     (after delete-capture-frame activate)
   "Advise capture-destroy to close the frame"
