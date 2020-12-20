@@ -23,11 +23,11 @@
         config = "git --git-dir=$HOME/.cfg/ --work-tree=$HOME";
         neofetch = "ncneofetch";
 
-        ls = "lsd";
-        l = "ls -l";
-        la = "ls -a";
-        lla = "ls -la";
-        lt = "ls --tree";
+        ls = "lsd -h";
+        l = "ls -lh";
+        la = "ls -ah";
+        lla = "ls -lah";
+        lt = "ls --tree -h";
       };
 
       # functions = {
