@@ -54,6 +54,16 @@
   (map! :desc "Create Sparse Tree" :ne "SPC / s" #'org-sparse-tree)
   (map! :desc "Create Sparse Tree for Tags" :ne "SPC / t" #'org-tags-sparse-tree))
 
+;;magit
+(map! :leader
+      (:prefix-map ("g" . "git")
+      :desc "Magit status" "g" 'magit-status-with-removed-dotfiles-args
+      :desc "Magit dot file status" "d" 'dotfiles-magit-status)) ;see https://emacs.stackexchange.com/a/58859
+;;not sure if this is also needed
+;;(define-key! magit-file-mode-map (kbd "SPC g g") 'magit-status-with-removed-dotfiles-args)
+;;(global-set-key (kbd "SPC g g") 'magit-status-with-removed-dotfiles-args)
+;;(define-key magit-file-mode-map (kbd "SPC g g") 'magit-status-with-removed-dotfiles-args)
+
 ;;evaluations
 (map! :leader
       "e e" #'eval-last-sexp
