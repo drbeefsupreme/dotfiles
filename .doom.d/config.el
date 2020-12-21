@@ -341,3 +341,12 @@ images in the current buffer."
   (setq word-wrap 1)
   (setq truncate-lines nil)
   (org-roam-dailies-capture-today))
+
+
+;;;;;;;;;;;
+;; urbit ;;
+;;;;;;;;;;;
+
+(defun dbs/send-to-tmux-at-point ()
+  (interactive)
+  (emamux:send-command (org-element-property :value (org-element-context))))

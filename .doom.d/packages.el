@@ -17,6 +17,8 @@
 (package! hoon-mode :recipe (:host github :repo "urbit/hoon-mode.el"))
 (add-hook 'hoon-mode #'lsp)
 ;;
+(package! emamux)
+;;
 ;;
 ;;graphviz
 (package! graphviz-dot-mode)

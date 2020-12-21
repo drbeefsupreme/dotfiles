@@ -196,10 +196,10 @@ _~_: modified
 
 (defhydra hydra-outline (:color pink :hint nil :foreign-keys run)
   "
-^Hide^             ^Show^           ^Move
-^^^^^^------------------------------------------------------
-_q_: sublevels     _a_: all         _u_: up
-_t_: body          _e_: entry       _n_: next visible
+^Hide^             ^Show^           ^Move                        ^Source
+^^^^^^------------------------------------------------------------------------------
+_q_: sublevels     _a_: all         _u_: up                      _x_: send to tmux
+_t_: body          _e_: entry       _n_: next visible            _l_: last command to tmux
 _o_: other         _i_: children    _p_: previous visible
 _c_: entry         _K_: branches    _f_: forward same level
 _L_: leaves        _s_: subtree     _b_: backward same level
@@ -225,5 +225,8 @@ _d_: subtree
   ("p" outline-previous-visible-heading)  ; Previous
   ("f" outline-forward-same-level)        ; Forward - same level
   ("b" outline-backward-same-level)       ; Backward - same level
+  ;; Source
+  ("x" dbs/send-to-tmux-at-point)  ; mostly for urbit/hoon
+  ("l" emamux:run-last-command)
+  ;; exit
   ("z" nil "leave"))
-
