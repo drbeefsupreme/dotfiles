@@ -56,13 +56,18 @@
 
 ;;evaluations
 (map! :leader
-      "e e" #'eval-last-sexp
-      "e b" #'eval-buffer
-      "e r" #'eval-region
-      "e f" #'eval-defun)
+      (:prefix-map ("e". "Evaluate")
+      "e" #'eval-last-sexp
+      "b" #'eval-buffer
+      "r" #'eval-region
+      "f" #'eval-defun))
 ;;find file
 (map! :leader
       :desc "Find in home dir" "f h" (lambda () (interactive) (cd "~/") (call-interactively 'find-file)))
+;;el-feed
+(map! :leader
+       :desc "REPL" "o R"#'+eval/open-repl-other-window
+       :desc "RSS feed" "o r" #'dbs/elfeed-load-db-and-open)
 ;;ivy navigation
 (map! :map counsel-find-file-map "<left>" #'counsel-up-directory)
 (map! :map counsel-find-file-map "<right>" #'ivy-alt-done)
@@ -229,3 +234,29 @@ _d_: subtree
   ("l" emamux:run-last-command)
   ;; exit
   ("z" nil "leave"))
+
+
+(defhydra dbs/hydra-elfeed (:color pink :hint nil :foreign-keys run)
+  "
+^Filter^             ^Mark^
+^^^^^^---------------------------
+_u_: Urbit         _R_: All Read
+_e_: emacs        ;; _S_: Star
+_q_: quantum
+_*_: starred
+_A_: All
+_T_: Today
+  "
+("u" (elfeed-search-set-filter "@6-months-ago +urbit"))
+("e" (elfeed-search-set-filter "@6-months-ago +emacs"))
+("q" (elfeed-search-set-filter "@6-months-ago +quantum"))
+("*" (elfeed-search-set-filter "@6-months-ago +star"))
+("S" dbs/elfeed-toggle-star)
+("A" (elfeed-search-set-filter "@6-months-ago"))
+("T" (elfeed-search-set-filter "@1-day-ago"))
+("R" dbs/elfeed-mark-all-as-read)
+("Q" dbs/elfeed-save-db-and-bury "Quit Elfeed" :color blue)
+("q" nil "quit" :color blue))
+
+(map! :map elfeed-search-mode-map
+      :n "." #'dbs/hydra-elfeed/body)

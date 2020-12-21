@@ -49,8 +49,7 @@
       org-superstar-headline-bullets-list '("☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷" "☷" "☷" "☷")
       org-pretty-entities t)
 
-(setq rmh-elfeed-org-files (list (concat doom-private-dir "elfeed.org")))
-(setq elfeed-db-directory "~/Dropbox/org-mode/elfeed/")
+
 
 (after! org
   (setq org-todo-keywords
@@ -266,6 +265,45 @@ images in the current buffer."
 ;;      debugging    ;;
 ;;;;;;;;;;;;;;;;;;;;;;;
 
+
+;;;;;;;;;;;;
+;; elfeed ;;
+;;;;;;;;;;;;
+(setq rmh-elfeed-org-files (list (concat doom-private-dir "elfeed.org")))
+
+(setq elfeed-db-directory "~/Dropbox/org-mode/elfeed/")
+
+(defalias 'dbs/elfeed-toggle-star
+(elfeed-expose #'elfeed-search-toggle-all 'star))
+
+;;functions to support syncing .elfeed between machines
+;;makes sure elfeed reads index from disk before launching
+(defun dbs/elfeed-load-db-and-open ()
+"Wrapper to load the elfeed db from disk before opening"
+(interactive)
+(elfeed-db-load)
+(elfeed)
+(elfeed-search-update--force))
+
+;;marks all as read
+(defun dbs/elfeed-mark-all-as-read ()
+(interactive)
+(mark-whole-buffer)
+(elfeed-search-untag-all-unread))
+
+;;write to disk when quitting
+(defun dbs/elfeed-save-db-and-bury ()
+"Wrapper to save the elfeed db to disk before burying buffer"
+(interactive)
+(elfeed-db-save)
+(quit-window))
+
+;; (use-package! hercules
+;;   :config
+;;   (hercules-def
+;;    :toggle-funs #'elfeed-hercules
+;;    :keymap 'elfeed-search-mode-map
+;;    :transient t))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;;      graphviz      ;;
