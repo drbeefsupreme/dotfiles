@@ -10,7 +10,9 @@
 
 ;;(package! org-super-agenda)
 (package! org-gcal)
-;;
+;;(package! elfeed-dashboard :recipe (:type git :host github :repo "Manoj321/elfeed-dashboard"))
+;;(straight-use-package '(elfeed-dashboard :type git :host github :repo "Manoj321/elfeed-dashboard"))
+
 ;;
 ;;Hoon stuff
 ;;
@@ -19,6 +21,10 @@
 ;;
 (package! emamux)
 ;;
+;;(package! hercules)
+;;(require 'hercules)
+
+
 ;;
 ;;graphviz
 (package! graphviz-dot-mode)
