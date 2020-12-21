@@ -49,6 +49,9 @@
       org-superstar-headline-bullets-list '("☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷" "☷" "☷" "☷")
       org-pretty-entities t)
 
+(setq rmh-elfeed-org-files (list (concat doom-private-dir "elfeed.org")))
+(setq elfeed-db-directory "~/Dropbox/org-mode/elfeed/")
+
 (after! org
   (setq org-todo-keywords
         '((sequence "TODO(t)" ; A task that needs doing and is ready to do
