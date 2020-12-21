@@ -204,8 +204,7 @@ _o_: other         _i_: children    _p_: previous visible
 _c_: entry         _K_: branches    _f_: forward same level
 _L_: leaves        _s_: subtree     _b_: backward same level
 _d_: subtree
-
-"
+  "
   ;; Hide
   ("q" hide-sublevels)    ; Hide everything but the top-level headings
   ("t" hide-body)         ; Hide everything but headings (all body lines)
