@@ -248,25 +248,25 @@ _d_: subtree
 
 (defhydra dbs/hydra-elfeed (:color pink :hint nil :foreign-keys run)
   "
-^Filter^             ^Mark^
-^^^^^^---------------------------
-_u_: Urbit         _R_: All Read
-_e_: emacs        ;; _S_: Star
-_q_: quantum
+^Filter^             ^Mark^          Actions
+^^^^^^----------------------------------------
+_U_: Urbit         _R_: All Read
+_E_: emacs         _S_: Star
+_Q_: quantum
 _*_: starred
 _A_: All
 _T_: Today
   "
-("u" (elfeed-search-set-filter "@6-months-ago +urbit"))
-("e" (elfeed-search-set-filter "@6-months-ago +emacs"))
-("q" (elfeed-search-set-filter "@6-months-ago +quantum"))
+("U" (elfeed-search-set-filter "@6-months-ago +urbit"))
+("E" (elfeed-search-set-filter "@6-months-ago +emacs"))
+("Q" (elfeed-search-set-filter "@6-months-ago +quantum"))
 ("*" (elfeed-search-set-filter "@6-months-ago +star"))
 ("S" dbs/elfeed-toggle-star)
 ("A" (elfeed-search-set-filter "@6-months-ago"))
 ("T" (elfeed-search-set-filter "@1-day-ago"))
 ("R" dbs/elfeed-mark-all-as-read)
-("Q" dbs/elfeed-save-db-and-bury "Quit Elfeed" :color blue)
-("q" nil "quit" :color blue))
+("X" dbs/elfeed-save-db-and-bury "Quit Elfeed" :color blue)
+("x" nil "quit" :color blue))
 
 (map! :map elfeed-search-mode-map
       :n "." #'dbs/hydra-elfeed/body)
