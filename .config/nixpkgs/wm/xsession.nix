@@ -20,7 +20,7 @@
         extraPackages = hp: [
           hp.dbus
           hp.monad-logger
-          hp.monad-contrib
+          #hp.monad-contrib
         ];
       };
     };
@@ -28,12 +28,12 @@
 
   home.packages = with pkgs; [
       nitrogen  #wallpaper - doesn't make symlink?
-      haskellPackages.xmonad-contrib
-      haskellPackages.xmonad-extras
-      haskellPackages.xmonad-wallpaper
-      haskellPackages.xmonad
-      haskellPackages.ghc
-      haskellPackages.xmobar
+      # haskellPackages.xmonad-contrib
+      # haskellPackages.xmonad-extras
+      # haskellPackages.xmonad-wallpaper
+      # haskellPackages.xmonad
+      # haskellPackages.ghc
+      # haskellPackages.xmobar
   ];
 
 
