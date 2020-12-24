@@ -26,6 +26,7 @@
   imports = [
     #configs
     ./machine/syzygyzer.nix
+    ./machine/display.nix
     #./role/xsettings.nix
     ./role/pgp.nix
     ./wm/xsession.nix
