@@ -20,7 +20,7 @@
         extraPackages = hp: [
           hp.dbus
           hp.monad-logger
-          #hp.monad-contrib
+          hp.xmonad-contrib
         ];
       };
     };
@@ -33,7 +33,8 @@
       # haskellPackages.xmonad-wallpaper
       # haskellPackages.xmonad
       # haskellPackages.ghc
-      # haskellPackages.xmobar
+      dmenu
+      haskellPackages.xmobar
   ];
 
 
