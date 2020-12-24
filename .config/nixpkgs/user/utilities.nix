@@ -11,11 +11,9 @@
     #overview
     htop
 
-    #display
-    autorandr
- 
     #security
     #_1password
+
 
     #shelly things
     xclip
