@@ -9,26 +9,31 @@
     #terminal = "${pkgs.kitty}/bin/kitty";
   };
 
-  # xsession = {
-  #   enable = true;
+  xsession = {
+    enable = true;
 
-  #   windowManager = {
-  #     default = "none+xmonad";
-  #     xmonad = {
-  #       enable = true;
-  #       enableContribAndExtras = true;
-  #       extraPackages = hp: [
-  #         hp.dbus
-  #         hp.monad-logger
-  #         hp.monad-contrib
-  #       ];
-  #     };
-  #   };
-  # };
+    windowManager = {
+      #default = "none+xmonad";
+      xmonad = {
+        enable = true;
+        enableContribAndExtras = true;
+        extraPackages = hp: [
+          hp.dbus
+          hp.monad-logger
+          hp.monad-contrib
+        ];
+      };
+    };
+  };
 
   home.packages = with pkgs; [
       nitrogen  #wallpaper - doesn't make symlink?
-      #xmobar
+      haskellPackages.xmonad-contrib
+      haskellPackages.xmonad-extras
+      haskellPackages.xmonad-wallpaper
+      haskellPackages.xmonad
+      haskellPackages.ghc
+      haskellPackages.xmobar
   ];
 
 

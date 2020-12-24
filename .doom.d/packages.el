@@ -23,7 +23,7 @@
 ;;
 ;;(package! hercules)
 ;;(require 'hercules)
-
+(package! emacsql-sqlite3)
 
 ;;
 ;;graphviz

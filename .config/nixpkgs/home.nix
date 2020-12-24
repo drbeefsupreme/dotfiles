@@ -16,9 +16,9 @@
 
   home.stateVersion = "20.03";
   #home.username = "poprox";
-  home.sessionVariables = {
-    NIX_PATH = "/home/poprox/.nix-defexpr/channels:nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixpkgs:/nix/var/nix/profiles/per-user/root/channels";
-  };
+  #home.sessionVariables = {
+  #  NIX_PATH = "/home/poprox/.nix-defexpr/channels:nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixpkgs:/nix/var/nix/profiles/per-user/root/channels";
+  #};
 
 
   nixpkgs.config.allowUnfree = true;
@@ -38,5 +38,5 @@
     ./user/trezor.nix
  ];
 
-  nixpkgs.overlays = [ (import ./overlays/emacsGcc.nix) (import ./overlays/discord.nix) ];
+  nixpkgs.overlays = [ (import ./overlays/emacsGcc.nix) ]; #(import ./overlays/discord.nix) ]; # (import ./overlays/discord.nix) ];
 }

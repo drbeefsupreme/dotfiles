@@ -8,11 +8,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;emacs
-(server-start) ;;starts emacs in server mode so it doesn't die when last frame is closed
+;;(server-start) ;;starts emacs in server mode so it doesn't die when last frame is closed
 
 ;;loading own modules
 (load! "+bindings")
-(load! "+private")
 
 ;;exiting a mode will not go back a character
 (setq evil-move-cursor-back nil)
@@ -296,8 +295,8 @@ images in the current buffer."
 
 (setq elfeed-db-directory "~/Dropbox/org-mode/elfeed/")
 
-(defalias 'dbs/elfeed-toggle-star
-(elfeed-expose #'elfeed-search-toggle-all 'star))
+;(defalias 'dbs/elfeed-toggle-star
+;(elfeed-expose #'elfeed-search-toggle-all 'star))
 
 ;;functions to support syncing .elfeed between machines
 ;;makes sure elfeed reads index from disk before launching

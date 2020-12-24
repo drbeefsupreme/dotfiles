@@ -185,3 +185,5 @@
     (global-undo-tree-mode -1)))
 
 (setq comp-async-env-modifier-form "")  ;;req for gccemacs
+
+;;(add-to-list 'exec-path "/home/poprox/.nix-profile/bin/sqlite3")
