@@ -25,10 +25,10 @@
 
   imports = [
     #configs
-    ./machine/syzygyzer.nix
-    ./machine/display.nix
+    #./machine/syzygyzer.nix
     #./role/xsettings.nix
     ./role/pgp.nix
+    ./wm/display.nix
     ./wm/xsession.nix
     #./user/browsers.nix
     ./user/utilities.nix

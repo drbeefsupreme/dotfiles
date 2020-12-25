@@ -54,6 +54,7 @@
     ffmpegthumbnailer  #video previews
     lsd  #ls deluxe
     mlocate  #find file
+    nano
     #powerline-fonts  #fonts with nix seem like a bad idea
     powerline-go  #cool prompt
     ranger   #file explorer
