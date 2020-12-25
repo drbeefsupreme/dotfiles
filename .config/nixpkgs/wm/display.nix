@@ -12,7 +12,6 @@
           };
           config = {
             eDP-1-1 = {
-              #dpi = 255;
               enable = true;
               mode = "3840x2160";
               #mode = "2560x1440";
@@ -20,7 +19,6 @@
               rate = "60.00";
             };
             DP-1-2 = {
-              #dpi = 100;
               enable = true;
               mode = "3440x1440";
               position = "0x0";
