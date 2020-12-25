@@ -41,14 +41,14 @@
     font = "Lat2-Terminus16";
     keyMap = "us";
   };
- 
+
   fonts.fonts = with pkgs; [
     fira
     fira-code
     (nerdfonts.override { fonts = [ "Hack" ]; })
     powerline-fonts
-  ]; 
- 
+  ];
+
   # ZFS services
   services.zfs.autoSnapshot.enable = true;
   services.zfs.autoScrub.enable = true;
@@ -67,11 +67,10 @@
   # $ nix search wget
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
-    brave
+    # brave
     coreutils
     emacsPackages.emacsql-sqlite
     gcc
-    gitAndTools.gitFull
     gnupg
     man
     mkpasswd
@@ -79,9 +78,11 @@
     pcsclite
     pcsctools
     sqlite
+    tailscale
     testdisk
     tree
     wget
+    yubikey-personalization
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -93,7 +94,14 @@
     enableSSHSupport = true;
   };
 
+  # environment.variables = {
+  #   GDK_SCALE = "2";
+  #   GDK_DPI_SCALE = "0.5";
+  #   QT_AUTO_SCREEN_SCALE_FACTOR = "1";
+  # };
+
   # List services that you want to enable:
+  fonts.fontconfig.dpi=100;
   services = {
     dbus = {
       enable = true;
@@ -105,6 +113,7 @@
       enable = true;
       layout = "us";
       videoDrivers = [ "nvidia" ];
+      dpi = 100;
       #xkbOptions = "eurosign:e";
 
       startDbusSession = true;
@@ -119,38 +128,51 @@
       };
 
       displayManager.sddm.enable = true;
+      displayManager.autoLogin.enable = true;
+      displayManager.autoLogin.user = "poprox";
+      #displayManager = pkgs.ly; #these don't work. how do i get ly?
+      #displayManager.ly.enable = true;
+      #
       displayManager.defaultSession = "none+xmonad";
       #desktopManager.plasma5.enable = true;
 
-############################################################################################################
-#       extraConfig = ''                                                                                  #
-#       Section "Monitor"                                                                                  #
-#           Identifier  "eDP-1"                                                                            #
-#               Modeline "3840x2160_60.00"  712.75  3840 4160 4576 5312  2160 2163 2168 2237 -hsync +vsync #
-#               Option  "PreferredMode"  "3840x2160_60.00"                                                 #
-#               Option  "RightOf" "DP-2"                                                                   #
-#               Option  "Position" "3840 0"                                                                #
-#       EndSection                                                                                         #
-#                                                                                                          #
-#       Section "Monitor"                                                                                  #
-#           Identifier  "DP-2"                                                                             #
-#               Modeline "3440x1440_60.00"  419.50  3440 3696 4064 4688  1440 1443 1453 1493 -hsync +vsync #
-#               Option  "PreferredMode"  "3440x1440_60.00"                                                 #
-#               Option  "LeftOf" "eDP-1"                                                                   #
-#       EndSection                                                                                         #
-#                                                                                                          #
-#       Section "Screen"                                                                                   #
-#           Identifier "default Screen Section"                                                            #
-#           SubSection "Display"                                                                           #
-#               Virtual     7280 2160                                                                      #
-#           EndSubSection                                                                                  #
-#       EndSection                                                                                         #
-#       '';                                                                                                #
-############################################################################################################
+
+      # config = ''                                                                                  #
+      # Section "Monitor"                                                                                  #
+      #     Identifier  "eDP-1"                                                                            #
+      #         Modeline "3840x2160_60.00"  712.75  3840 4160 4576 5312  2160 2163 2168 2237 -hsync +vsync #
+      #         Option  "PreferredMode"  "3840x2160_60.00"                                                 #
+      #         Option  "RightOf" "DP-2"                                                                   #
+      #         Option  "Position" "3840 0"                                                                #
+      # EndSection                                                                                         #
+      #                                                                                                    #
+      # Section "Monitor"                                                                                  #
+      #     Identifier  "DP-2"                                                                             #
+      #         Modeline "3440x1440_60.00"  419.50  3440 3696 4064 4688  1440 1443 1453 1493 -hsync +vsync #
+      #         Option  "PreferredMode"  "3440x1440_60.00"                                                 #
+      #         Option  "LeftOf" "eDP-1"                                                                   #
+      # EndSection                                                                                         #
+      #                                                                                                    #
+      # Section "Screen"                                                                                   #
+      #     Identifier "default Screen Section"                                                            #
+      #     SubSection "Display"                                                                           #
+      #         Virtual     7280 2160                                                                      #
+      #     EndSubSection                                                                                  #
+      # EndSection                                                                                         #
+      # '';                                                                                                #
+
     };
   };
 
-
+  documentation = {
+    enable = true;
+    dev.enable = true;
+    doc.enable = true;
+    info.enable = true;
+    man.enable = true;
+    nixos.enable = true;
+    nixos.includeAllModules = true;
+  };
 
   #steam stuff
   hardware.opengl.enable = true;
@@ -163,7 +185,7 @@
   hardware.opengl.driSupport32Bit = true;
   hardware.pulseaudio.support32Bit = true;
   hardware.steam-hardware.enable = true;
- 
+
   # GPU
   hardware.nvidia.prime = {
     sync.enable = true;
@@ -201,28 +223,28 @@
   #yubikey
   services.udev.packages = [ pkgs.yubikey-personalization pkgs.libu2f-host ];
   services.pcscd.enable = true;
- 
+
   # development
   services.lorri.enable = true;
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
-  #################################################################
-  # environment.shellInit = ''                                    #
-  #   export GPG_TTY="$(tty)"                                     #
-  #   gpg-connect-agent /bye                                      #
-  #   export SSH_AUTH_SOCK="/run/user/$UID/gnupg/S.gpg-agent.ssh" #
-  # '';                                                           #
-  #################################################################
+
+  environment.shellInit = ''
+    export GPG_TTY="$(tty)"
+    gpg-connect-agent /bye
+    export SSH_AUTH_SOCK="/run/user/$UID/gnupg/S.gpg-agent.ssh"
+  '';
+
 
   nix.nixPath = [ "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
-                  "nixos-config=/etc/nixos/configuration.nix" # where nixos-rebuild pulls from
+                  "nixos-config=/etc/nixos/configuration.nix"
                   "/nix/var/nix/profiles/per-user/root/channels"
                   "$HOME/.nix-defexpr/channels"
                 ];
 
-  
+
   environment.interactiveShellInit = ''
     export PATH="$HOME/.emacs.d/bin:$PATH"
   '';
@@ -242,4 +264,3 @@
   system.stateVersion = "20.09"; # Did you read the comment?
 
 }
-

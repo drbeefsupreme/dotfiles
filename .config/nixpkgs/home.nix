@@ -30,7 +30,7 @@
     ./role/pgp.nix
     ./wm/display.nix
     ./wm/xsession.nix
-    #./user/browsers.nix
+    ./user/browsers.nix
     ./user/utilities.nix
     ./user/git.nix
     ./user/console.nix
