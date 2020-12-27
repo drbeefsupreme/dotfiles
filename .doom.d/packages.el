@@ -12,7 +12,9 @@
 (package! org-gcal)
 ;;(package! elfeed-dashboard :recipe (:type git :host github :repo "Manoj321/elfeed-dashboard"))
 ;;(straight-use-package '(elfeed-dashboard :type git :host github :repo "Manoj321/elfeed-dashboard"))
-
+;;org-roam auto complete
+(package! company-org-roam
+   :recipe (:host github :repo "jethrokuan/company-org-roam"))
 ;;
 ;;Hoon stuff
 ;;
