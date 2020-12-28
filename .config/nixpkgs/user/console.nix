@@ -58,6 +58,7 @@
     #powerline-fonts  #fonts with nix seem like a bad idea
     powerline-go  #cool prompt
     ranger   #file explorer
+    stig  #front-end for transmission
     tmux
     w3m     #terminal web browser + images for ranger
   ];
