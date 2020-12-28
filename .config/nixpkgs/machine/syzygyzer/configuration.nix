@@ -22,7 +22,17 @@ in {
   # IOMMU for PCI passthrough
   boot.kernelParams = [ "intel_iommu=on" ];
   # these drivers are available in the initrd used during the boot process
-  boot.initrd.availableKernelModules = [ "nvidia" "vfio-pci" ]
+  boot.initrd.availableKernelModules = [ "nvidia" "vfio-pci" ];
+  # ensures that vfio-pci is loaded into the GPU video + audio devices
+  boot.initrd.preDeviceCommands = ''
+    DEVS="0000:01:00.0 0000:01:00.1"
+    for DEV in $DEVS; do
+      echo "vfio-pci" > /sys/bus/pci/devices/$DEV/driver_override
+    done
+    modprobe -i vfio-pci
+  '';
+  # turns on KVM
+  boot.kernelModules = [ "kvm-intel" ];
 
   systemd.services.systemd-udev-settle.enable = false; #fixes one of the startup issues
 
