@@ -12,9 +12,8 @@
     htop
     pciutils
 
-    #security
-    #_1password
-
+    #system
+    killall
 
     #shelly things
     xclip
