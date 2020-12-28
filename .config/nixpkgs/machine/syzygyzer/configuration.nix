@@ -18,6 +18,8 @@ in {
   # Add ZFS support
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs.requestEncryptionCredentials = true;
+  # IOMMU for PCI passthrough
+  boot.kernelParams = [ "intel_iommu=on" ];
 
   systemd.services.systemd-udev-settle.enable = false; #fixes one of the startup issues
 
