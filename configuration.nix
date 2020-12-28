@@ -1,1 +1,1 @@
-/etc/nixos/configuration.nix
+/home/poprox/nix-home/machine/syzygyzer/configuration.nix
