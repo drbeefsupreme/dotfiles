@@ -36,6 +36,8 @@ in {
   networking.interfaces.eno1.useDHCP = true;
   networking.interfaces.wlp111s0.useDHCP = true;
 
+  boot.kernelParams = ["intel_iommu=on"];
+
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
