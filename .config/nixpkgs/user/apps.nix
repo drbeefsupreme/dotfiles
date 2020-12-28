@@ -7,7 +7,7 @@
     qbittorrent
     slack
     spotify
-    steam
+    #steam
     vlc
   ];
 }

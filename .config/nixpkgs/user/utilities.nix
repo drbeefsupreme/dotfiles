@@ -10,6 +10,7 @@
 
     #overview
     htop
+    pciutils
 
     #security
     #_1password
