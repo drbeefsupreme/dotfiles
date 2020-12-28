@@ -140,7 +140,7 @@ in {
     xserver = {
       enable = true;
       layout = "us";
-      videoDrivers = [ "nvidia" ];
+      #videoDrivers = [ "nvidia" ];
       dpi = 100;
       #xkbOptions = "eurosign:e";
 
