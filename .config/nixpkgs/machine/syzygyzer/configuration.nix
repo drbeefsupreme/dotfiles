@@ -104,6 +104,7 @@ in {
     testdisk
     transmission # torrent daemon
     tree
+    virtmanager  #virtual machines
     wget
     yubikey-personalization
   ];
@@ -116,6 +117,14 @@ in {
     enable = true;
     enableSSHSupport = true;
     #pinentryFlavor = "curses";  #trying random shit to get this working
+  };
+
+  virtualisation.libvirtd = {
+    enable = true;
+    qemuOvmf = true;  #firmware for UEFI virtual machines
+    qemuRunAsRoot = false;
+    onBoot = "ignore"; #do not automatically restart guests when host boots
+    onShutdown = "shutdown"; #tries to gracefully shutdown guests when hosts shuts down
   };
 
   # services.gpg-agent.extraConfig = ''
