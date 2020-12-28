@@ -35,7 +35,7 @@ in {
   boot.blacklistedKernelModules = [ "nvidia" "nouveau" ];
   # turns on KVM
   boot.kernelModules = [ "kvm-intel" "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" ];
-  boot.extraModprobeConfig = ["options vfio-pci ids="]
+  boot.extraModprobeConfig = "options vfio-pci ids=10de:1f36,10de:10f9";
 
   systemd.services.systemd-udev-settle.enable = false; #fixes one of the startup issues
 
