@@ -7,7 +7,7 @@
     userName="drbeefsupreme";
     userEmail="drbeefsupreme@discordja.net";
     signing = {
-      key = "B70D5683DE7F9EFC";
+      key = "B70D5683DE7F9EFC"; #test
       signByDefault = true;
     };
     lfs.enable = true;
