@@ -84,6 +84,7 @@ in {
     steam
     tailscale
     testdisk
+    transmission # torrent daemon
     tree
     wget
     yubikey-personalization
@@ -171,6 +172,16 @@ in {
       # EndSection                                                                                         #
       # '';                                                                                                #
 
+    };
+
+    # torrent daemon
+    transmission = {
+      enable = true;
+      settings = {
+        download-dir = "/home/poprox/Downloads/torrents/";
+        incomplete-dir = "/home/poprox/Downloads/torrents/incomplete/";
+        incomplete-dir-enabled = true;
+      };
     };
   };
 
