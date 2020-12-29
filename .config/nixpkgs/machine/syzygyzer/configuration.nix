@@ -19,6 +19,24 @@ in {
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs.requestEncryptionCredentials = true;
 
+  # IOMMU for PCI passthrough
+  boot.kernelParams = [ "intel_iommu=on" ];
+  # these drivers are available in the initrd used during the boot process
+  # boot.initrd.availableKernelModules = [ "nvidia" "vfio-pci" ];
+  # ensures that vfio-pci is loaded into the GPU video + audio devices
+  # boot.initrd.preDeviceCommands = ''
+  #   DEVS="0000:01:00.0 0000:01:00.1"
+  #   for DEV in $DEVS; do
+  #     echo "vfio-pci" > /sys/bus/pci/devices/$DEV/driver_override
+  #   done
+  #   modprobe -i vfio-pci
+  # '';
+
+  boot.blacklistedKernelModules = [ "nvidia" "nouveau" ];
+  # turns on KVM
+  boot.kernelModules = [ "kvm-intel" "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" ];
+  boot.extraModprobeConfig = "options vfio-pci ids=10de:1f36,10de:10f9";
+
   systemd.services.systemd-udev-settle.enable = false; #fixes one of the startup issues
 
   networking.hostId = "f1a2d797"; #machine id `head -c /etc/machine-id`
@@ -64,7 +82,7 @@ in {
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.poprox = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "video" "audio" "disk" "networkmanager" "plugdev" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "video" "audio" "disk" "networkmanager" "plugdev" "libvirtd" "transmission" ];
   };
 
   # List packages installed in system profile. To search, run:
@@ -73,9 +91,11 @@ in {
   environment.systemPackages = with pkgs; [
     brave
     coreutils
+    dropbox-cli
     emacsPackages.emacsql-sqlite
     gcc
     gnupg
+    libosinfo
     man
     mkpasswd
     networkmanager
@@ -88,8 +108,10 @@ in {
     testdisk
     transmission # torrent daemon
     tree
+    virtmanager  #virtual machines
     wget
     yubikey-personalization
+    yubioath-desktop
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -100,6 +122,14 @@ in {
     enable = true;
     enableSSHSupport = true;
     #pinentryFlavor = "curses";  #trying random shit to get this working
+  };
+
+  virtualisation.libvirtd = {
+    enable = true;
+    qemuOvmf = true;  #firmware for UEFI virtual machines
+    qemuRunAsRoot = false;
+    onBoot = "ignore"; #do not automatically restart guests when host boots
+    onShutdown = "shutdown"; #tries to gracefully shutdown guests when hosts shuts down
   };
 
   # services.gpg-agent.extraConfig = ''
@@ -124,7 +154,7 @@ in {
     xserver = {
       enable = true;
       layout = "us";
-      videoDrivers = [ "nvidia" ];
+      #videoDrivers = [ "nvidia" ];
       dpi = 100;
       #xkbOptions = "eurosign:e";
 
