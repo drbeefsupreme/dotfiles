@@ -80,7 +80,7 @@ in {
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.poprox = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "video" "audio" "disk" "networkmanager" "plugdev" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "video" "audio" "disk" "networkmanager" "plugdev" "libvirtd" "transmission" ];
   };
 
   # List packages installed in system profile. To search, run:
@@ -89,9 +89,11 @@ in {
   environment.systemPackages = with pkgs; [
     brave
     coreutils
+    dropbox-cli
     emacsPackages.emacsql-sqlite
     gcc
     gnupg
+    libosinfo
     man
     mkpasswd
     networkmanager
