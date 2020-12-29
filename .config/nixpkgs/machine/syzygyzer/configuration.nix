@@ -109,6 +109,7 @@ in {
     virtmanager  #virtual machines
     wget
     yubikey-personalization
+    yubioath-desktop
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
