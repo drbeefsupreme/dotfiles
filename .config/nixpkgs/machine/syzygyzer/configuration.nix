@@ -39,6 +39,15 @@ in {
   # #   onShutdown = "shutdown"; #tries to gracefully shutdown guests when hosts shuts down   #
   # # };                                                                                      #
   #############################################################################################
+  #the GPU settings. hmm maybe i should have had that off?
+  ################################
+  # # GPU                        #
+  # hardware.nvidia.prime = {    #
+  #   sync.enable = true;        #
+  #   nvidiaBusId = "PCI:1:0:0"; #
+  #   intelBusId = "PCI:0:2:0";  #
+  # };                           #
+  ################################
 
   systemd.services.systemd-udev-settle.enable = false; #fixes one of the startup issues
 
@@ -234,12 +243,6 @@ in {
   hardware.pulseaudio.support32Bit = true;
   hardware.steam-hardware.enable = true;
  
-  # GPU
-  hardware.nvidia.prime = {
-    sync.enable = true;
-    nvidiaBusId = "PCI:1:0:0";
-    intelBusId = "PCI:0:2:0";
-  };
 
   # nonfree firmware
   hardware.enableRedistributableFirmware = true;
