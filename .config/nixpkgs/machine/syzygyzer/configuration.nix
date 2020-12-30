@@ -53,13 +53,13 @@ in {
 
   # GPU
   hardware.nvidia.prime = {
-    sync.enable = true;
+    #sync.enable = true;
     offload.enable = true;
     nvidiaBusId = "PCI:1:0:0";
     intelBusId = "PCI:0:2:0";
   };
 
-  xserver.videodrivers = [ "nvidia" ];
+  #services.xserver.videoDrivers = [ "nvidia" ];
 
 
   # virtualisation settings
@@ -200,7 +200,7 @@ in {
     xserver = {
       enable = true;
       layout = "us";
-      #videoDrivers = [ "nvidia" ];
+      videoDrivers = [ "nvidia" ];
       dpi = 100;
       #xkbOptions = "eurosign:e";
 
