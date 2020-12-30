@@ -19,23 +19,26 @@ in {
   boot.supportedFilesystems = [ "zfs" ];
   boot.zfs.requestEncryptionCredentials = true;
 
-  # IOMMU for PCI passthrough
-  boot.kernelParams = [ "intel_iommu=on" ];
-  # these drivers are available in the initrd used during the boot process
-  # boot.initrd.availableKernelModules = [ "nvidia" "vfio-pci" ];
-  # ensures that vfio-pci is loaded into the GPU video + audio devices
-  # boot.initrd.preDeviceCommands = ''
-  #   DEVS="0000:01:00.0 0000:01:00.1"
-  #   for DEV in $DEVS; do
-  #     echo "vfio-pci" > /sys/bus/pci/devices/$DEV/driver_override
-  #   done
-  #   modprobe -i vfio-pci
-  # '';
 
-  boot.blacklistedKernelModules = [ "nvidia" "nouveau" ];
-  # turns on KVM
-  boot.kernelModules = [ "kvm-intel" "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" ];
-  boot.extraModprobeConfig = "options vfio-pci ids=10de:1f36,10de:10f9";
+
+
+  ##old virtualization settings
+  #############################################################################################
+  # #boot.blacklistedKernelModules = [ "nvidia" "nouveau" ];                                  #
+  # # turns on KVM                                                                            #
+  # #boot.kernelModules = [ "kvm-intel" "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" ]; #
+  # # boot.extraModprobeConfig = "options vfio-pci ids=10de:1f36,10de:10f9";                  #
+  # #                                                                                         #
+  # #                                                                                         #
+  # #                                                                                         #
+  # # virtualisation.libvirtd = {                                                             #
+  # #   enable = true;                                                                        #
+  # #   qemuOvmf = true;  #firmware for UEFI virtual machines                                 #
+  # #   qemuRunAsRoot = false;                                                                #
+  # #   onBoot = "ignore"; #do not automatically restart guests when host boots               #
+  # #   onShutdown = "shutdown"; #tries to gracefully shutdown guests when hosts shuts down   #
+  # # };                                                                                      #
+  #############################################################################################
 
   systemd.services.systemd-udev-settle.enable = false; #fixes one of the startup issues
 
@@ -122,13 +125,7 @@ in {
     #pinentryFlavor = "curses";  #trying random shit to get this working
   };
 
-  virtualisation.libvirtd = {
-    enable = true;
-    qemuOvmf = true;  #firmware for UEFI virtual machines
-    qemuRunAsRoot = false;
-    onBoot = "ignore"; #do not automatically restart guests when host boots
-    onShutdown = "shutdown"; #tries to gracefully shutdown guests when hosts shuts down
-  };
+
 
   # services.gpg-agent.extraConfig = ''
   #   pinentry-program ${pkgs.pinentry.gnome3}/bin/pinentry-gnome3
