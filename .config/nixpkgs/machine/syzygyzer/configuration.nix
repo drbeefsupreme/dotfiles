@@ -6,10 +6,20 @@
 
 let
   unstable = import <nixos-unstable> { };
+
+  nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
+    export __NV_PRIME_RENDER_OFFLOAD=1
+    export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
+    export __GLX_VENDOR_LIBRARY_NAME=nvidia
+    export __VK_LAYER_NV_optimus=NVIDIA_only
+    exec -a "$0" "$@"
+  '';
 in {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ../modules/virtualisation/vfio.nix
+      ../modules/virtualisation/libvirt.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -40,14 +50,44 @@ in {
   # # };                                                                                      #
   #############################################################################################
   #the GPU settings. hmm maybe i should have had that off?
-  ################################
-  # # GPU                        #
-  # hardware.nvidia.prime = {    #
-  #   sync.enable = true;        #
-  #   nvidiaBusId = "PCI:1:0:0"; #
-  #   intelBusId = "PCI:0:2:0";  #
-  # };                           #
-  ################################
+
+  # GPU
+  hardware.nvidia.prime = {
+    sync.enable = true;
+    offload.enable = true;
+    nvidiaBusId = "PCI:1:0:0";
+    intelBusId = "PCI:0:2:0";
+  };
+
+
+
+  # virtualisation settings
+
+  virtualisation = {
+    # vfio settings - stuff related to vfio drivers
+    vfio = {
+      enable = true;
+      IOMMUType = "intel";
+      devices = [ "10de:1f36" "10de:10f9" ];
+      blacklistNvidia = true;
+      disableEFIfb = false; #unsure about this one
+      ignoreMSRs = false; #also dunno about this one. seems CPU related which isnt my main issue atm
+      applyACSpatch = false; #seems related to IOMMU grouping, which i think is fine, so ill leave it off for now
+    };
+
+    # libvirt - stuff related to KVM/QEMU
+    libvirtd = {
+      enable = true;
+      qemuOvmf = true;
+      clearEmulationCapabilities = false; #just the default, idk what this is
+      # deviceACL = [
+      #   "/dev/vfio/vfio"
+      #   "/dev/vfio/1"
+      #   "/dev/kvm"
+      # ];
+    };
+  };
+
 
   systemd.services.systemd-udev-settle.enable = false; #fixes one of the startup issues
 
@@ -108,6 +148,7 @@ in {
     man
     mkpasswd
     networkmanager
+    nvidia-offload
     pcsclite
     pcsctools
     #pinentry-gnome
