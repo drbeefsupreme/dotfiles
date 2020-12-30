@@ -37,6 +37,7 @@
     ./user/apps.nix
     ./user/emacs.nix
     ./user/trezor.nix
+    ./user/arduino.nix
  ];
 
   nixpkgs.overlays = [ (import ./overlays/emacsGcc.nix) ]; #(import ./overlays/discord.nix) ]; # (import ./overlays/discord.nix) ];
