@@ -59,34 +59,35 @@ in {
     intelBusId = "PCI:0:2:0";
   };
 
+  xserver.videodrivers = [ "nvidia" ];
 
 
   # virtualisation settings
 
-  virtualisation = {
-    # vfio settings - stuff related to vfio drivers
-    vfio = {
-      enable = true;
-      IOMMUType = "intel";
-      devices = [ "10de:1f36" "10de:10f9" ];
-      blacklistNvidia = true;
-      disableEFIfb = false; #unsure about this one
-      ignoreMSRs = false; #also dunno about this one. seems CPU related which isnt my main issue atm
-      applyACSpatch = false; #seems related to IOMMU grouping, which i think is fine, so ill leave it off for now
-    };
+  # virtualisation = {
+  #   # vfio settings - stuff related to vfio drivers
+  #   vfio = {
+  #     enable = true;
+  #     IOMMUType = "intel";
+  #     devices = [ "10de:1f36" "10de:10f9" ];
+  #     blacklistNvidia = true;
+  #     disableEFIfb = false; #unsure about this one
+  #     ignoreMSRs = false; #also dunno about this one. seems CPU related which isnt my main issue atm
+  #     applyACSpatch = false; #seems related to IOMMU grouping, which i think is fine, so ill leave it off for now
+  #   };
 
-    # libvirt - stuff related to KVM/QEMU
-    libvirtd = {
-      enable = true;
-      qemuOvmf = true;
-      clearEmulationCapabilities = false; #just the default, idk what this is
-      # deviceACL = [
-      #   "/dev/vfio/vfio"
-      #   "/dev/vfio/1"
-      #   "/dev/kvm"
-      # ];
-    };
-  };
+  #   # libvirt - stuff related to KVM/QEMU
+  #   libvirtd = {
+  #     enable = true;
+  #     qemuOvmf = true;
+  #     clearEmulationCapabilities = false; #just the default, idk what this is
+  #     # deviceACL = [
+  #     #   "/dev/vfio/vfio"
+  #     #   "/dev/vfio/1"
+  #     #   "/dev/kvm"
+  #     # ];
+  #   };
+  # };
 
 
   systemd.services.systemd-udev-settle.enable = false; #fixes one of the startup issues
