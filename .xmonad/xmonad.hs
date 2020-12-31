@@ -35,7 +35,9 @@ import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
 
     -- Layout
+import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Layout.ResizableTile
+import XMonad.Layout.SimpleFloat
 import XMonad.Layout.ThreeColumns
 
     -- Util
@@ -239,11 +241,12 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- which denotes layout choice.
 --
 --how do i get the type sig here?
-myLayout = avoidStruts (tiled ||| Mirror tiled ||| threeCol ||| Full)
+myLayout = avoidStruts (tiled ||| Mirror tiled ||| threeCol ||| floatingWorkspace ||| Full)
   where
     -- default tiling algorithm partitions the screen into two panes
-    tiled       = Tall nmaster delta ratio
-    threeCol    = ThreeCol nmaster delta ratio
+    tiled              = Tall nmaster delta ratio
+    threeCol           = ThreeCol nmaster delta ratio
+    floatingWorkspace  = simpleFloat
 
     -- The default number of windows in the master pane
     nmaster = 1
