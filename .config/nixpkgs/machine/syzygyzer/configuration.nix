@@ -164,6 +164,12 @@ in {
     wget
     yubikey-personalization
     yubioath-desktop
+
+    haskellPackages.xmonad-contrib
+    haskellPackages.xmonad-extras
+    haskellPackages.xmonad
+    haskellPackages.monad-logger
+    haskellPackages.dbus
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -213,6 +219,13 @@ in {
       windowManager.xmonad = {
         enable = true;
         enableContribAndExtras = true;
+        extraPackages = haskellPackages: [
+          haskellPackages.xmonad-contrib
+          haskellPackages.xmonad-extras
+          haskellPackages.xmonad
+          haskellPackages.monad-logger
+          haskellPackages.dbus
+        ];
       };
 
       #displayManager.sddm.enable = true;
@@ -221,7 +234,7 @@ in {
       #displayManager.ly.enable = true;
       #
       #displayManager.defaultSession = "none+xmonad";
-      #desktopManager.plasma5.enable = true;
+      desktopManager.plasma5.enable = true;
 
       #displayManager.autoLogin.enable = true;
       #displayManager.autoLogin.user = "poprox";
