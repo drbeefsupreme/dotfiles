@@ -1,3 +1,7 @@
 * root :elfeed:
 ** blogs :blogs:
 *** [[https://www.scottaaronson.com/blog/?feed=rss2][Shtetl-Optimized]] :quantum:
+** news :news:
+*** https://lwn.net/headlines/rss :linux:
+** products :products:
+*** https://www.yubico.com/feed/?utm_source=blog&utm_medium=website&utm_campaign=Visits%20to%20%2FFeed%2F :tech:
