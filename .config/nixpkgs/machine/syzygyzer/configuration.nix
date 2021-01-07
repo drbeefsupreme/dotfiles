@@ -274,6 +274,9 @@ in {
         incomplete-dir-enabled = true;
       };
     };
+
+    #trezor
+    trezord.enable = true;
   };
 
   documentation = {
