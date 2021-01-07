@@ -138,6 +138,7 @@ myKeys =
         , ("M-e b", spawn "emacsclient -c -a 'emacs' --eval '(ibuffer)'")   --list emacs buffers
         , ("M-e d", spawn "emacsclient -c -a 'emacs' --eval '(dired nil)'") --dired emacs file manager
         , ("M-e t", spawn "emacsclient -c -a 'emacs' --eval '(make-capture-frame)'")
+        , ("M-e c", spawn "org-capture")
 
         --Kill windows
         , ("M-S-c", kill)                       --close focused window

@@ -354,7 +354,7 @@ in {
                 ];
 
   
-  environment.interactiveShellInit = ''
+  environment.loginShellInit = ''
     export PATH="$HOME/.emacs.d/bin:$PATH"
   '';
 
