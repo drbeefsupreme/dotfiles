@@ -23,6 +23,7 @@ import System.Exit
     -- Data
 
 import Data.Monoid
+import Data.Ratio
 
     -- Actions
 import XMonad.Actions.CycleWS
@@ -279,7 +280,7 @@ myManageHook = composeAll
     , className =? "Gimp"           --> doFloat
     , className =? "Steam"          --> doFloat
     , className =? "steam"          --> doFloat
-    , title     =? "doom-capture"   --> doFloatAt 0.4 0.4
+    , title     =? "doom-capture"   --> doRectFloat (W.RationalRect (3 % 10) (2 % 5) (1 % 4) (1 % 4))
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore ]
 
