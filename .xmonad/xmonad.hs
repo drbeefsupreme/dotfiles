@@ -33,6 +33,7 @@ import XMonad.Actions.WithAll
     -- Hooks
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.ManageHelpers
 
     -- Layout
 import XMonad.Layout.PerWorkspace (onWorkspace)
@@ -279,6 +280,7 @@ myManageHook = composeAll
     , className =? "Gimp"           --> doFloat
     , className =? "Steam"          --> doFloat
     , className =? "steam"          --> doFloat
+    , title     =? "doom-capture"   --> doFloatAt 0.4 0.4
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore ]
 
