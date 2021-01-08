@@ -115,7 +115,7 @@ images in the current buffer."
 
 (setq org-roam-directory "~/Dropbox/org-mode/roam")
 (setq org-roam-buffer-position 'top)
-(add-hook 'after-init-hook 'org-roam-mode)
+(add-hook 'after-init-hook 'org-roam-mode)
 
 ;;daily journals
 
@@ -134,10 +134,12 @@ images in the current buffer."
 (setq org-capture-templates
       (doct '(
         ("Todo" :keys "t"
+         ;;:icon ("checklist" :set "octicon") ;;doesn't seem to work idk why
          :file "~/Dropbox/org-mode/inbox.org"
          :prepend t
          :template ("* TODO %?\n%i\n%a")
-         :headline "Tasks")
+         :headline "Tasks"
+         :type entry)
         ("Note" :keys "n"
          :file "~/Dropbox/org-mode/inbox.org"
          :prepend t
