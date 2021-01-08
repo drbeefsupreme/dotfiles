@@ -276,13 +276,14 @@ myLayout = avoidStruts (tiled ||| Mirror tiled ||| threeCol ||| floatingWorkspac
 --
 myManageHook :: XMonad.Query (Data.Monoid.Endo WindowSet)
 myManageHook = composeAll
-    [ className =? "MPlayer"        --> doFloat
-    , className =? "Gimp"           --> doFloat
-    , className =? "Steam"          --> doFloat
-    , className =? "steam"          --> doFloat
-    , title     =? "doom-capture"   --> doRectFloat (W.RationalRect (3 % 10) (2 % 5) (1 % 4) (1 % 4))
-    , resource  =? "desktop_window" --> doIgnore
-    , resource  =? "kdesktop"       --> doIgnore ]
+    [ className =? "MPlayer"                --> doFloat
+    , className =? "Gimp"                   --> doFloat
+    , className =? "Steam"                  --> doFloat
+    , className =? "steam"                  --> doFloat
+    , title     =? "Yubico Authenticator"   --> doRectFloat (W.RationalRect (1 % 10) (1 % 20) (1 % 3) (1 % 6))
+    , title     =? "doom-capture"           --> doRectFloat (W.RationalRect (3 % 10) (2 % 5) (1 % 4) (1 % 4))
+    , resource  =? "desktop_window"         --> doIgnore
+    , resource  =? "kdesktop"               --> doIgnore ]
 
 ------------------------------------------------------------------------
 -- Event handling
