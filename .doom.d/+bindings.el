@@ -50,7 +50,8 @@
         :n "."   #'hydra-outline/body)
   (map! :localleader
         :map org-mode-map
-        "S" #'org/insert-screenshot)
+        :n "S" #'org/insert-screenshot
+        :desc "Create org-roam note from headline" "m c" #'org-roam-create-note-from-headline)
   (map! :desc "Create Sparse Tree" :ne "SPC / s" #'org-sparse-tree)
   (map! :desc "Create Sparse Tree for Tags" :ne "SPC / t" #'org-tags-sparse-tree))
 
