@@ -1,6 +1,7 @@
 * root :elfeed:
 ** blogs :blogs:
 *** [[https://www.scottaaronson.com/blog/?feed=rss2][Shtetl-Optimized]] :quantum:
+*** https://sachachua.com/blog/feed :emacs:
 ** news :news:
 *** https://lwn.net/headlines/rss :linux:
 ** products :products:

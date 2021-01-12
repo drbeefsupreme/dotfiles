@@ -223,6 +223,18 @@
 (setq latex-run-command "pdflatex") ;;sets the default latex command to pdflatex
 
 
+;;unfilling
+(defun unfill-paragraph ()
+  (interactive)
+  (let ((fill-column (point-max)))
+    (fill-paragraph nil)))
+
+(defun unfill-region ()
+  (interactive)
+  (let ((fill-column (point-max)))
+    (fill-region (region-beginning) (region-end) nil)))
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;     security        ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -25,5 +25,6 @@
     fortune
 
     unrar
+    unzip
   ];
 }

@@ -114,7 +114,7 @@ images in the current buffer."
 ;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq org-roam-directory "~/Dropbox/org-mode/roam")
-(setq org-roam-buffer-position 'top)
+(setq org-roam-buffer-position 'right)
 (add-hook 'after-init-hook 'org-roam-mode)
 
 ;;daily journals
