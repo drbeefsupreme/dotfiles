@@ -9,6 +9,7 @@
     slack
     spotify
     #steam
+    tdesktop #telegram
     vlc
   ];
 }
