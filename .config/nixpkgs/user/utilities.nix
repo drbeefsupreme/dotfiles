@@ -8,6 +8,9 @@
     arp-scan
     google-cloud-sdk
 
+    #compatibility
+    appimage-run
+
     #overview
     htop
     pciutils
