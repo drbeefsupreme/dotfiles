@@ -15,6 +15,9 @@
     htop
     pciutils
 
+    #games
+    steam-run-native
+
     #system
     killall
 
