@@ -2,6 +2,7 @@
 
 {
   home.packages = with pkgs; [
+    calibre   
     discord   #done with overlay
     monero-gui
     qbittorrent
