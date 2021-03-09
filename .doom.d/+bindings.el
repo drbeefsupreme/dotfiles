@@ -86,27 +86,27 @@
 (map! :leader
       "g p" #'git-timemachine-show-previous-revision
       "g n" #'git-timemachine-show-next-revision)
-;;markdown
-(map! :localleader
-      :map markdown-mode-map
-      :prefix ("i" . "Insert")
-      :desc "Blockquote"    "q" 'markdown-insert-blockquote
-      :desc "Bold"          "b" 'markdown-insert-bold
-      :desc "Code"          "c" 'markdown-insert-code
-      :desc "Emphasis"      "e" 'markdown-insert-italic
-      :desc "Footnote"      "f" 'markdown-insert-footnote
-      :desc "Code Block"    "s" 'markdown-insert-gfm-code-block
-      :desc "Image"         "i" 'markdown-insert-image
-      :desc "Link"          "l" 'markdown-insert-link
-      :desc "List Item"     "n" 'markdown-insert-list-item
-      :desc "Pre"           "p" 'markdown-insert-pre
-      (:prefix ("h" . "Headings")
-        :desc "One"   "1" 'markdown-insert-atx-1
-        :desc "Two"   "2" 'markdown-insert-atx-2
-        :desc "Three" "3" 'markdown-insert-atx-3
-        :desc "Four"  "4" 'markdown-insert-atx-4
-        :desc "Five"  "5" 'markdown-insert-atx-5
-        :desc "Six"   "6" 'markdown-insert-atx-6))
+;;markdown  - this is creating some issues but ive never actually used it so w/e
+;; (map! :localleader
+;;       :map markdown-mode-map
+;;       :prefix ("i" . "Insert")
+;;       :desc "Blockquote"    "q" 'markdown-insert-blockquote
+;;       :desc "Bold"          "b" 'markdown-insert-bold
+;;       :desc "Code"          "c" 'markdown-insert-code
+;;       :desc "Emphasis"      "e" 'markdown-insert-italic
+;;       :desc "Footnote"      "f" 'markdown-insert-footnote
+;;       :desc "Code Block"    "s" 'markdown-insert-gfm-code-block
+;;       :desc "Image"         "i" 'markdown-insert-image
+;;       :desc "Link"          "l" 'markdown-insert-link
+;;       :desc "List Item"     "n" 'markdown-insert-list-item
+;;       :desc "Pre"           "p" 'markdown-insert-pre
+;;       (:prefix ("h" . "Headings")
+;;         :desc "One"   "1" 'markdown-insert-atx-1
+;;         :desc "Two"   "2" 'markdown-insert-atx-2
+;;         :desc "Three" "3" 'markdown-insert-atx-3
+;;         :desc "Four"  "4" 'markdown-insert-atx-4
+;;         :desc "Five"  "5" 'markdown-insert-atx-5
+;;         :desc "Six"   "6" 'markdown-insert-atx-6))
 ;;file finding override (projectile hangs using tramp)
 (map! :leader
       :prefix "s"
