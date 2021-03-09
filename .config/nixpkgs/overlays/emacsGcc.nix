@@ -10,8 +10,7 @@ let
     let
       src = builtins.fetchTarball
         {
-          url = https://github.com/nix-community/emacs-overlay/archive/c052c8b1a02d2645abc1bad78ea391a9a2d1a43d.tar.gz;
-          sha256 = "0hgp31bz5qfzwnc85dyzidbmwc5xh4nw2nhd9619wydnjaw3yi33";
+          url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
         };
     in import src self super;
 in {
