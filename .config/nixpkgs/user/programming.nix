@@ -3,5 +3,6 @@
 {
   home.packages = with pkgs; [
     ccls  #C/C++ language server
+    bear  #compilation database maker for C LSP
   ];
 }
