@@ -7,13 +7,13 @@
 let
   unstable = import <nixos-unstable> { };
 
-  nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
-    export __NV_PRIME_RENDER_OFFLOAD=1
-    export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
-    export __GLX_VENDOR_LIBRARY_NAME=nvidia
-    export __VK_LAYER_NV_optimus=NVIDIA_only
-    exec -a "$0" "$@"
-  '';
+  # nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
+  #   export __NV_PRIME_RENDER_OFFLOAD=1
+  #   export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
+  #   export __GLX_VENDOR_LIBRARY_NAME=nvidia
+  #   export __VK_LAYER_NV_optimus=NVIDIA_only
+  #   exec -a "$0" "$@"
+  # '';
 in {
   imports =
     [ # Include the results of the hardware scan.
@@ -53,8 +53,8 @@ in {
 
   # GPU
   hardware.nvidia.prime = {
-    #sync.enable = true;
-    offload.enable = true;
+    sync.enable = true;
+    #offload.enable = true;
     nvidiaBusId = "PCI:1:0:0";
     intelBusId = "PCI:0:2:0";
   };
@@ -149,7 +149,7 @@ in {
     man
     mkpasswd
     networkmanager
-    nvidia-offload
+    #nvidia-offload
     pcsclite
     pcsctools
     #pinentry-gnome
@@ -333,11 +333,11 @@ in {
     #0.0.0.0 reddit.com
     #0.0.0.0 www.reddit.com
     #0.0.0.0 np.reddit.com
-    0.0.0.0 www.facebook.com
-    0.0.0.0 facebook.com
-    0.0.0.0 news.ycombinator.com
-    0.0.0.0 www.twitter.com
-    0.0.0.0 twitter.com
+    #0.0.0.0 www.facebook.com
+    #0.0.0.0 facebook.com
+    #0.0.0.0 news.ycombinator.com
+    #0.0.0.0 www.twitter.com
+    #0.0.0.0 twitter.com
   '';
 
   services.tailscale.enable = true;
