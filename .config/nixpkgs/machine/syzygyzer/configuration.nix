@@ -333,11 +333,11 @@ in {
     #0.0.0.0 reddit.com
     #0.0.0.0 www.reddit.com
     #0.0.0.0 np.reddit.com
-    #0.0.0.0 www.facebook.com
-    #0.0.0.0 facebook.com
+    0.0.0.0 www.facebook.com
+    0.0.0.0 facebook.com
     #0.0.0.0 news.ycombinator.com
-    #0.0.0.0 www.twitter.com
-    #0.0.0.0 twitter.com
+    0.0.0.0 www.twitter.com
+    0.0.0.0 twitter.com
   '';
 
   services.tailscale.enable = true;

@@ -18,6 +18,9 @@
     #games
     steam-run-native
 
+    #video
+    youtube-dl
+
     #system
     killall
 

@@ -1,9 +1,11 @@
 {  config, pkgs, ... }:
-
+let
+   unstable = import  <nixos-unstable> {};
+in
 {
   home.packages = with pkgs; [
     calibre   
-    discord   #done with overlay
+    unstable.discord   #done with overlay
     monero-gui
     qbittorrent
     signal-desktop
