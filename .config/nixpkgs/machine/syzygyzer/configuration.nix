@@ -144,6 +144,7 @@ in {
     dropbox-cli
     emacsPackages.emacsql-sqlite
     gcc
+    gnumake
     gnupg
     libosinfo
     man

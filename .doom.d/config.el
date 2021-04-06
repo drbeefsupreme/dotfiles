@@ -116,7 +116,7 @@
 (use-package! company-graphviz-dot)
 
 (add-to-list 'auto-mode-alist '("\\.idr\\'" . idris-mode))
-(add-hook 'idris-mode-hook 'turn-on-idris-simple-indent)
+(add-hook 'idris-mode-hook 'turn-on-idris-simple-indent) ;;why the fuck doesnt this work
 
 
 
