@@ -61,7 +61,7 @@ in {
 
   #services.xserver.videoDrivers = [ "nvidia" ];
 
-
+  virtualisation.docker.enable = true;
   # virtualisation settings
 
   # virtualisation = {
@@ -132,7 +132,7 @@ in {
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.poprox = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "video" "audio" "disk" "networkmanager" "plugdev" "libvirtd" "transmission" ];
+    extraGroups = [ "wheel" "video" "audio" "disk" "networkmanager" "plugdev" "libvirtd" "transmission" "docker"];
   };
 
   # List packages installed in system profile. To search, run:
@@ -141,6 +141,7 @@ in {
   environment.systemPackages = with pkgs; [
     brave
     coreutils
+    docker_compose
     dropbox-cli
     emacsPackages.emacsql-sqlite
     gcc
