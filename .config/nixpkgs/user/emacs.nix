@@ -13,7 +13,7 @@ in
 
   programs.emacs = {
     enable = true;
-    package = nixos-unstable.emacsGccWrapped;
+    #package = nixos-unstable.emacsGccWrapped;
   };
 
 }

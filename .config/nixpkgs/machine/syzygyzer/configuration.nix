@@ -5,7 +5,8 @@
 { config, pkgs, ... }:
 
 let
-  unstable = import <nixos-unstable> { };
+  unstable = import <nixos-unstable> { inherit (config.nixpkgs) config; };
+  #unstable = import <nixos-unstable> { };
 
   # nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
   #   export __NV_PRIME_RENDER_OFFLOAD=1
@@ -58,6 +59,7 @@ in {
     nvidiaBusId = "PCI:1:0:0";
     intelBusId = "PCI:0:2:0";
   };
+  hardware.nvidia.modesetting.enable = true;
 
   #services.xserver.videoDrivers = [ "nvidia" ];
 
@@ -135,9 +137,15 @@ in {
     extraGroups = [ "wheel" "video" "audio" "disk" "networkmanager" "plugdev" "libvirtd" "transmission" "docker"];
   };
 
+  nix.trustedUsers = [ "root" "poprox" ];
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   nixpkgs.config.allowUnfree = true;
+  # nixpkgs.overlays = [
+  #   (self: super: { inherit (unstable) steam; })
+  # ];
+  programs.steam.enable = true;
   environment.systemPackages = with pkgs; [
     brave
     coreutils
@@ -148,6 +156,7 @@ in {
     gnumake
     gnupg
     libosinfo
+    lutris
     man
     mkpasswd
     networkmanager
@@ -156,7 +165,7 @@ in {
     pcsctools
     #pinentry-gnome
     sqlite
-    steam
+    #unstable.steam
     steam-run-native
     tailscale
     testdisk
@@ -164,6 +173,8 @@ in {
     tree
     vim
     virtmanager  #virtual machines
+    vulkan-tools
+    wine
     wget
     yubikey-personalization
     yubioath-desktop
@@ -212,6 +223,11 @@ in {
       videoDrivers = [ "nvidia" ];
       dpi = 100;
       #xkbOptions = "eurosign:e";
+
+      # Prevent screen tearing!?
+      screenSection = ''
+        Option "metamodes" "nvidia-auto-select +0+0 { ForceCompositionPipeline = On }"
+      '';
 
       #startDbusSession = true; #no longer needed with 21.05
       libinput = { #touchpad
@@ -300,6 +316,7 @@ in {
     pkgs.vaapiVdpau
     pkgs.libvdpau-va-gl
   ];
+  #hardware.heater = true; #pressure cooker for steam or something
   hardware.opengl.driSupport32Bit = true;
   hardware.pulseaudio.support32Bit = true;
   hardware.steam-hardware.enable = true;
@@ -335,11 +352,11 @@ in {
     #0.0.0.0 reddit.com
     #0.0.0.0 www.reddit.com
     #0.0.0.0 np.reddit.com
-    0.0.0.0 www.facebook.com
-    0.0.0.0 facebook.com
+    #0.0.0.0 www.facebook.com
+    #0.0.0.0 facebook.com
     #0.0.0.0 news.ycombinator.com
-    0.0.0.0 www.twitter.com
-    0.0.0.0 twitter.com
+    #0.0.0.0 www.twitter.com
+    #0.0.0.0 twitter.com
   '';
 
   services.tailscale.enable = true;

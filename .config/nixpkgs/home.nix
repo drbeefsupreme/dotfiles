@@ -42,5 +42,5 @@
     ./user/programming.nix
  ];
 
-  nixpkgs.overlays = [ (import ./overlays/emacsGcc.nix) ]; #(import ./overlays/discord.nix) ]; # (import ./overlays/discord.nix) ];
+  #nixpkgs.overlays = [ (import ./overlays/emacsGcc.nix) ]; #(import ./overlays/discord.nix) ]; # (import ./overlays/discord.nix) ];
 }

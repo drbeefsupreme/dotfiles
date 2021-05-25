@@ -6,6 +6,7 @@ in
   home.packages = with pkgs; [
     calibre   
     unstable.discord   #done with overlay
+    ledger-live-desktop
     monero-gui
     qbittorrent
     signal-desktop
