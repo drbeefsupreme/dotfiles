@@ -362,7 +362,7 @@ in {
   services.tailscale.enable = true;
 
   #yubikey
-  services.udev.packages = [ pkgs.yubikey-personalization pkgs.libu2f-host ];
+  services.udev.packages = [ pkgs.yubikey-personalization pkgs.libu2f-host pkgs.ledger-udev-rules ];
   services.pcscd.enable = true;
  
   # development
