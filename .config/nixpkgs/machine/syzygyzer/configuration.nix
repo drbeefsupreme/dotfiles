@@ -19,8 +19,8 @@ in {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ../modules/virtualisation/vfio.nix
-      ../modules/virtualisation/libvirt.nix
+      #../modules/virtualisation/vfio.nix
+      #../modules/virtualisation/libvirt.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -63,7 +63,7 @@ in {
 
   #services.xserver.videoDrivers = [ "nvidia" ];
 
-  virtualisation.docker.enable = true;
+  #virtualisation.docker.enable = true;
   # virtualisation settings
 
   # virtualisation = {
@@ -229,10 +229,9 @@ in {
         Option "metamodes" "nvidia-auto-select +0+0 { ForceCompositionPipeline = On }"
       '';
 
-      #startDbusSession = true; #no longer needed with 21.05
-      libinput = { #touchpad
+      libinput = {
         enable = true;
-        disableWhileTyping = true;
+        touchpad.disableWhileTyping = true;
       };
 
       windowManager.xmonad = {
