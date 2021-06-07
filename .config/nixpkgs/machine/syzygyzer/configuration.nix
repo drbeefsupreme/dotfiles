@@ -213,7 +213,6 @@ in {
   services = {
     dbus = {
       enable = true;
-      socketActivated = true;
     };
 
     #X11 windowing system
