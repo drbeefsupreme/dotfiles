@@ -30,6 +30,7 @@ import XMonad.Actions.CycleWS
 import XMonad.Actions.Promote
 import XMonad.Actions.RotSlaves (rotSlavesDown, rotAllDown)
 import XMonad.Actions.WithAll
+import Graphics.X11.ExtraTypes.XF86
 
     -- Hooks
 import XMonad.Hooks.EwmhDesktops
@@ -167,6 +168,15 @@ myKeys =
         , ("M-<Backspace>", promote)            --Moves focused window to master, others maintain order
         , ("M-S-<Tab>", rotSlavesDown)          --Rotate all windows except master and keep focus in place
         , ("M-C-<Tab>", rotAllDown)             --Rotate all windows in the current stack
+
+        --Volume
+        , ("<XF86AudioMute>", spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
+        , ("<XF86AudioLowerVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ -5%")
+        , ("<XF86AudioRaiseVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ +5%")
+
+        -- brightness
+        , ("<XF86MonBrightnessUp>", spawn "light -A 5")
+        , ("<XF86MonBrightnessDown>", spawn "light -U 5")
 
         --Floating windows
         , ("M-S-t", withFocused $ windows . W.sink)  --Push floating window back to tile

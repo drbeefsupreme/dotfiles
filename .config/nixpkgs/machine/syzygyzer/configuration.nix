@@ -54,7 +54,7 @@ in {
 
   # GPU
   hardware.nvidia.prime = {
-    sync.enable = true;
+    #sync.enable = true;
     #offload.enable = true;
     nvidiaBusId = "PCI:1:0:0";
     intelBusId = "PCI:0:2:0";
@@ -94,7 +94,7 @@ in {
 
   systemd.services.systemd-udev-settle.enable = false; #fixes one of the startup issues
 
-  networking.hostId = "f1a2d797"; #machine id `head -c /etc/machine-id`
+  networking.hostId = "38d39716"; #machine id `head -c /etc/machine-id`
   networking.hostName = "syzygyzer"; # Define your hostname.
   #networking.wireless.enable = true;  # use networkmanager instead
   networking.networkmanager.enable = true; # enables NetworkManager service and nmtui
@@ -156,6 +156,7 @@ in {
     gnumake
     gnupg
     libosinfo
+    light
     lutris
     man
     mkpasswd
@@ -176,6 +177,7 @@ in {
     vulkan-tools
     wine
     wget
+    #xorg.xbacklight
     yubikey-personalization
     yubioath-desktop
 
@@ -219,7 +221,7 @@ in {
     xserver = {
       enable = true;
       layout = "us";
-      videoDrivers = [ "nvidia" ];
+      videoDrivers = [ "nvidia" "modesetting" ];
       dpi = 100;
       #xkbOptions = "eurosign:e";
 
