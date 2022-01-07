@@ -23,14 +23,17 @@ in {
       #../modules/virtualisation/libvirt.nix
     ];
 
+
+  boot = {
   # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  # Add ZFS support
-  boot.supportedFilesystems = [ "zfs" ];
-  boot.zfs.requestEncryptionCredentials = true;
-
-
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+    kernelPackages = pkgs.linuxPackages_5_15;
+    extraModulePackages = with config.boot.kernelPackages; [ rtw89 ];
+    # kernelModules = with config.boot.kernelPackages; [ rtw89 ];
+  };
 
 
   ##old virtualization settings
@@ -51,15 +54,6 @@ in {
   # # };                                                                                      #
   #############################################################################################
   #the GPU settings. hmm maybe i should have had that off?
-
-  # GPU
-  hardware.nvidia.prime = {
-    #sync.enable = true;
-    #offload.enable = true;
-    nvidiaBusId = "PCI:1:0:0";
-    intelBusId = "PCI:0:2:0";
-  };
-  hardware.nvidia.modesetting.enable = true;
 
   #services.xserver.videoDrivers = [ "nvidia" ];
 
@@ -92,9 +86,9 @@ in {
   # };
 
 
-  systemd.services.systemd-udev-settle.enable = false; #fixes one of the startup issues
+  # systemd.services.systemd-udev-settle.enable = false; #fixes one of the startup issues
 
-  networking.hostId = "38d39716"; #machine id `head -c /etc/machine-id`
+  networking.hostId = "645b863f"; #machine id `head -c /etc/machine-id`
   networking.hostName = "syzygyzer"; # Define your hostname.
   #networking.wireless.enable = true;  # use networkmanager instead
   networking.networkmanager.enable = true; # enables NetworkManager service and nmtui
@@ -106,8 +100,8 @@ in {
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
   networking.useDHCP = false;
-  networking.interfaces.eno1.useDHCP = true;
-  networking.interfaces.wlp111s0.useDHCP = true;
+  networking.interfaces.enp2s0.useDHCP = true;
+  networking.interfaces.wlp3s0.useDHCP = true;
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -124,8 +118,8 @@ in {
   ]; 
  
   # ZFS services
-  services.zfs.autoSnapshot.enable = true;
-  services.zfs.autoScrub.enable = true;
+  # services.zfs.autoSnapshot.enable = true;
+  # services.zfs.autoScrub.enable = true;
 
   # Enable sound.
   # sound.enable = true;
@@ -145,37 +139,27 @@ in {
   # nixpkgs.overlays = [
   #   (self: super: { inherit (unstable) steam; })
   # ];
-  programs.steam.enable = true;
+  # programs.steam.enable = true;
   environment.systemPackages = with pkgs; [
     brave
     coreutils
-    docker_compose
     dropbox-cli
-    emacsPackages.emacsql-sqlite
+    #emacsPackages.emacsql-sqlite
     gcc
+    #git
     gnumake
     gnupg
     libosinfo
-    light
-    lutris
     man
     mkpasswd
     networkmanager
     #nvidia-offload
     pcsclite
     pcsctools
-    #pinentry-gnome
-    sqlite
-    #unstable.steam
-    steam-run-native
+    #sqlite
     tailscale
-    testdisk
-    transmission # torrent daemon
     tree
     vim
-    virtmanager  #virtual machines
-    vulkan-tools
-    wine
     wget
     #xorg.xbacklight
     yubikey-personalization
@@ -211,7 +195,6 @@ in {
   # };
 
   # List services that you want to enable:
-  fonts.fontconfig.dpi=100;
   services = {
     dbus = {
       enable = true;
@@ -221,18 +204,18 @@ in {
     xserver = {
       enable = true;
       layout = "us";
-      videoDrivers = [ "nvidia" "modesetting" ];
+      # videoDrivers = [ "nvidia" "modesetting" ];
       dpi = 100;
       #xkbOptions = "eurosign:e";
 
       # Prevent screen tearing!?
-      screenSection = ''
-        Option "metamodes" "nvidia-auto-select +0+0 { ForceCompositionPipeline = On }"
-      '';
+      # screenSection = ''
+      #   Option "metamodes" "nvidia-auto-select +0+0 { ForceCompositionPipeline = On }"
+      # '';
 
       libinput = {
         enable = true;
-        touchpad.disableWhileTyping = true;
+        # touchpad.disableWhileTyping = true;
       };
 
       windowManager.xmonad = {
@@ -284,16 +267,6 @@ in {
 
     };
 
-    # torrent daemon
-    transmission = {
-      enable = true;
-      settings = {
-        download-dir = "/home/poprox/Downloads/torrents/";
-        incomplete-dir = "/home/poprox/Downloads/torrents/incomplete/";
-        incomplete-dir-enabled = true;
-      };
-    };
-
     #trezor
     trezord.enable = true;
   };
@@ -309,17 +282,17 @@ in {
   };
 
   #steam stuff
-  hardware.opengl.enable = true;
-  hardware.opengl.extraPackages = [
-    pkgs.intel-ocl
-    pkgs.vaapiIntel
-    pkgs.vaapiVdpau
-    pkgs.libvdpau-va-gl
-  ];
+  # hardware.opengl.enable = true;
+  #hardware.opengl.extraPackages = [
+  #   pkgs.intel-ocl
+  #  pkgs.vaapiIntel
+  #  pkgs.vaapiVdpau
+  #  pkgs.libvdpau-va-gl
+  # ];
   #hardware.heater = true; #pressure cooker for steam or something
-  hardware.opengl.driSupport32Bit = true;
-  hardware.pulseaudio.support32Bit = true;
-  hardware.steam-hardware.enable = true;
+  # hardware.opengl.driSupport32Bit = true;
+  # hardware.pulseaudio.support32Bit = true;
+  # hardware.steam-hardware.enable = true;
  
 
   # nonfree firmware
@@ -330,21 +303,21 @@ in {
 
   #dropbox
   systemd.user.services.dropbox = {
-    description = "Dropbox";
-    wantedBy = [ "graphical-session.target" ];
-    environment = {
-      QT_PLUGIN_PATH = "/run/current-system/sw/" + pkgs.qt5.qtbase.qtPluginPrefix;
-      QML2_IMPORT_PATH = "/run/current-system/sw/" + pkgs.qt5.qtbase.qtQmlPrefix;
+   description = "Dropbox";
+   wantedBy = [ "graphical-session.target" ];
+   environment = {
+     QT_PLUGIN_PATH = "/run/current-system/sw/" + pkgs.qt5.qtbase.qtPluginPrefix;
+     QML2_IMPORT_PATH = "/run/current-system/sw/" + pkgs.qt5.qtbase.qtQmlPrefix;
   };
   serviceConfig = {
-    ExecStart = "${pkgs.dropbox.out}/bin/dropbox";
-    ExecReload = "${pkgs.coreutils.out}/bin/kill -HUP $MAINPID";
-    KillMode = "control-group"; # upstream recommends process
-    Restart = "on-failure";
-    PrivateTmp = true;
-    ProtectSystem = "full";
-    Nice = 10;
-    };
+   ExecStart = "${pkgs.dropbox.out}/bin/dropbox";
+   ExecReload = "${pkgs.coreutils.out}/bin/kill -HUP $MAINPID";
+   KillMode = "control-group"; # upstream recommends process
+   Restart = "on-failure";
+   PrivateTmp = true;
+   ProtectSystem = "full";
+   Nice = 10;
+   };
   };
 
   networking.extraHosts =
@@ -366,7 +339,7 @@ in {
   services.pcscd.enable = true;
  
   # development
-  services.lorri.enable = true;
+  # services.lorri.enable = true;
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
@@ -402,7 +375,7 @@ in {
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "20.09"; # Did you read the comment?
+  system.stateVersion = "21.11"; # Did you read the comment?
 
 }
 

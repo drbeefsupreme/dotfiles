@@ -15,10 +15,6 @@
     fish = {
       enable = true;
 
-      interactiveShellInit = ''
-        neofetch
-      '';
-
       shellAliases = {
         config = "git --git-dir=$HOME/.cfg/ --work-tree=$HOME";
         neofetch = "ncneofetch";
@@ -35,12 +31,6 @@
       #     body = "eval $GOPATH/bin/powerline-go -error $status -shell bare";
       #   };
       # };
-
-      promptInit = ''
-        function fish_prompt
-          eval powerline-go -error $status -shell bare
-        end
-      '';
     };
 
     bash.enable = true;

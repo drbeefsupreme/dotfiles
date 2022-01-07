@@ -15,8 +15,9 @@
   # changes in each release.
 
 
-  home.stateVersion = "20.03";
-  #home.username = "poprox";
+  home.stateVersion = "21.11";
+  home.username = "poprox";
+  home.homeDirectory = "/home/poprox";
   #home.sessionVariables = {
   #  NIX_PATH = "/home/poprox/.nix-defexpr/channels:nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixpkgs:/nix/var/nix/profiles/per-user/root/channels";
   #};

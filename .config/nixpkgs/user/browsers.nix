@@ -5,7 +5,7 @@
     brave
     google-chrome
     firefox
-    tor-browser-bundle-bin
+    #tor-browser-bundle-bin
   ];
 
   programs.chromium = {
