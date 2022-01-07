@@ -1,6 +1,10 @@
 { config, pkgs, ... }:
 
 {
+  home.packages = with pkgs; [
+    gh  # github CLI
+  ];
+
   programs.git = {
     package = pkgs.gitAndTools.gitFull;
     enable=true;
