@@ -141,6 +141,7 @@ myKeys =
         , ("M-e b", spawn "emacsclient -c -a 'emacs' --eval '(ibuffer)'")   --list emacs buffers
         , ("M-e d", spawn "emacsclient -c -a 'emacs' --eval '(dired nil)'") --dired emacs file manager
         , ("M-e c", spawn "org-capture")
+        , ("<Print>", spawn "flameshot gui")
 
         --Kill windows
         , ("M-S-c", kill)                       --close focused window
@@ -345,6 +346,7 @@ myStartupHook = do
         spawnOnce "nitrogen --restore &"
         spawnOnce "picom &" --compositor
         spawnOnce "emacs --daemon &"
+        spawnOnce "flameshot &"
 
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
