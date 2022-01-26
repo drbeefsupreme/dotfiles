@@ -6,6 +6,12 @@
 ;; (package! another-package :recipe (:host github :repo "username/repo"))
 ;; (package! builtin-package :disable t)
 ;;
+;;
+;; emacs
+(package! undo-tree)
+;;(require `undo-tree)
+;;(global-undo-tree-mode)
+;;
 ;;org mode
 
 ;;(package! org-super-agenda)
@@ -35,7 +41,7 @@
 ;;(package! company-graphviz-dot)
 ;;tutorial
 (package! evil-tutor)
-;;
+
 ;;magit PR reviews
 ;;(package!
 ;;  github-review

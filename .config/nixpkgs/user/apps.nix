@@ -16,5 +16,6 @@ in
     #steam
     tdesktop #telegram
     vlc
+    zoom-us
   ];
 }

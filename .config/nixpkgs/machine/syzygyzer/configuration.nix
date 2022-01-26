@@ -8,13 +8,13 @@ let
   unstable = import <nixos-unstable> { inherit (config.nixpkgs) config; };
   #unstable = import <nixos-unstable> { };
 
-  # nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
-  #   export __NV_PRIME_RENDER_OFFLOAD=1
-  #   export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
-  #   export __GLX_VENDOR_LIBRARY_NAME=nvidia
-  #   export __VK_LAYER_NV_optimus=NVIDIA_only
-  #   exec -a "$0" "$@"
-  # '';
+  nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
+    export __NV_PRIME_RENDER_OFFLOAD=1
+    export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
+    export __GLX_VENDOR_LIBRARY_NAME=nvidia
+    export __VK_LAYER_NV_optimus=NVIDIA_only
+    exec -a "$0" "$@"
+  '';
 in {
   imports =
     [ # Include the results of the hardware scan.
@@ -30,60 +30,10 @@ in {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
-    kernelPackages = pkgs.linuxPackages_5_15;
+    # kernelPackages = pkgs.linuxPackages_5_15;
     extraModulePackages = with config.boot.kernelPackages; [ rtw89 ];
     # kernelModules = with config.boot.kernelPackages; [ rtw89 ];
   };
-
-
-  ##old virtualization settings
-  #############################################################################################
-  # #boot.blacklistedKernelModules = [ "nvidia" "nouveau" ];                                  #
-  # # turns on KVM                                                                            #
-  # #boot.kernelModules = [ "kvm-intel" "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" ]; #
-  # # boot.extraModprobeConfig = "options vfio-pci ids=10de:1f36,10de:10f9";                  #
-  # #                                                                                         #
-  # #                                                                                         #
-  # #                                                                                         #
-  # # virtualisation.libvirtd = {                                                             #
-  # #   enable = true;                                                                        #
-  # #   qemuOvmf = true;  #firmware for UEFI virtual machines                                 #
-  # #   qemuRunAsRoot = false;                                                                #
-  # #   onBoot = "ignore"; #do not automatically restart guests when host boots               #
-  # #   onShutdown = "shutdown"; #tries to gracefully shutdown guests when hosts shuts down   #
-  # # };                                                                                      #
-  #############################################################################################
-  #the GPU settings. hmm maybe i should have had that off?
-
-  #services.xserver.videoDrivers = [ "nvidia" ];
-
-  #virtualisation.docker.enable = true;
-  # virtualisation settings
-
-  # virtualisation = {
-  #   # vfio settings - stuff related to vfio drivers
-  #   vfio = {
-  #     enable = true;
-  #     IOMMUType = "intel";
-  #     devices = [ "10de:1f36" "10de:10f9" ];
-  #     blacklistNvidia = true;
-  #     disableEFIfb = false; #unsure about this one
-  #     ignoreMSRs = false; #also dunno about this one. seems CPU related which isnt my main issue atm
-  #     applyACSpatch = false; #seems related to IOMMU grouping, which i think is fine, so ill leave it off for now
-  #   };
-
-  #   # libvirt - stuff related to KVM/QEMU
-  #   libvirtd = {
-  #     enable = true;
-  #     qemuOvmf = true;
-  #     clearEmulationCapabilities = false; #just the default, idk what this is
-  #     # deviceACL = [
-  #     #   "/dev/vfio/vfio"
-  #     #   "/dev/vfio/1"
-  #     #   "/dev/kvm"
-  #     # ];
-  #   };
-  # };
 
 
   # systemd.services.systemd-udev-settle.enable = false; #fixes one of the startup issues
@@ -120,6 +70,23 @@ in {
   # ZFS services
   # services.zfs.autoSnapshot.enable = true;
   # services.zfs.autoScrub.enable = true;
+  #
+
+  # nvidia
+  hardware.nvidia = {
+    modesetting.enable = true;
+    prime = {
+      #sync.enable = true;
+      #offload.enable = true;
+      nvidiaBusId = "PCI:1:00:0";
+      amdgpuBusId = "PCI:6:00:0";
+    };
+  #   prime = {
+  #     offload.enable = true;
+  #     amdgpuBusId = "PCI:6:00:0"; #should be swapped
+  #     nvidiaBusId = "PCI:1:00:0";
+  #   };
+  };
 
   # Enable sound.
   # sound.enable = true;
@@ -136,9 +103,8 @@ in {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   nixpkgs.config.allowUnfree = true;
-  # nixpkgs.overlays = [
-  #   (self: super: { inherit (unstable) steam; })
-  # ];
+  #nixpkgs.overlays = import ../../overlaid;
+
   # programs.steam.enable = true;
   environment.systemPackages = with pkgs; [
     brave
@@ -151,11 +117,13 @@ in {
     gnupg
     libosinfo
     man
+    mitscheme
     mkpasswd
     networkmanager
-    #nvidia-offload
+    nvidia-offload
     pcsclite
     pcsctools
+    racket
     #sqlite
     tailscale
     tree
@@ -204,7 +172,7 @@ in {
     xserver = {
       enable = true;
       layout = "us";
-      # videoDrivers = [ "nvidia" "modesetting" ];
+      videoDrivers = [ "nvidia" ];
       dpi = 100;
       #xkbOptions = "eurosign:e";
 

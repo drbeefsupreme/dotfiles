@@ -25,13 +25,17 @@
         lla = "ls -lah";
         lt = "ls --tree -h";
       };
-
-      # functions = {
-      #   fish_prompt = {
-      #     body = "eval $GOPATH/bin/powerline-go -error $status -shell bare";
-      #   };
-      # };
     };
+
+    #   # functions = {
+    #   #   fish_prompt = {
+    #   #     body = "eval $GOPATH/bin/powerline-go -error $status -shell bare";
+    #   #   };
+    #   # };
+    #   shellInit = ''
+    #     for file in ${pkgs.bobthefish}/lib/bobthefish/{functions/,}*.fish; . $file; end
+    #   '';
+    # };
 
     bash.enable = true;
 
