@@ -21,13 +21,15 @@
 ;;(straight-use-package '(elfeed-dashboard :type git :host github :repo "Manoj321/elfeed-dashboard"))
 (package! solidity-mode)
 ;;(require 'solidity-mode)
-
+(package! origami)
 
 ;;
 ;;Hoon stuff
 ;;
+;;(use-package! hoon-mode :recipe (:host github :repo "urbit/hoon-mode.el"))
 (package! hoon-mode :recipe (:host github :repo "urbit/hoon-mode.el"))
 (add-hook 'hoon-mode #'lsp)
+;;(use-package! hoon-mode)
 ;;
 (package! emamux)
 ;;

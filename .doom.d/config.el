@@ -17,6 +17,9 @@
 ;;exiting a mode will not go back a character
 (setq evil-move-cursor-back nil)
 
+;;undo tree region
+(setq undo-tree-enable-undo-in-region t)
+
 
 ;;kills all buffers not currently open in the current tab. need to figure out how to save buffers in other tabs
 (defun kill-other-buffers ()

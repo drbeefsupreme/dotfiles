@@ -35,6 +35,9 @@ in {
     # kernelModules = with config.boot.kernelPackages; [ rtw89 ];
   };
 
+  # virtualizaton
+  virtualisation.libvirtd.enable = true;
+  programs.dconf.enable = true;
 
   # systemd.services.systemd-udev-settle.enable = false; #fixes one of the startup issues
 
@@ -59,7 +62,7 @@ in {
     font = "Lat2-Terminus16";
     keyMap = "us";
   };
- 
+
   fonts.fonts = with pkgs; [
     fira
     fira-code
@@ -73,20 +76,20 @@ in {
   #
 
   # nvidia
-  hardware.nvidia = {
-    modesetting.enable = true;
-    prime = {
-      #sync.enable = true;
-      #offload.enable = true;
-      nvidiaBusId = "PCI:1:00:0";
-      amdgpuBusId = "PCI:6:00:0";
-    };
+  # hardware.nvidia = {
+  #   #modesetting.enable = true;
   #   prime = {
-  #     offload.enable = true;
-  #     amdgpuBusId = "PCI:6:00:0"; #should be swapped
+  #     #sync.enable = true;
+  #     #offload.enable = true;
   #     nvidiaBusId = "PCI:1:00:0";
+  #     amdgpuBusId = "PCI:6:00:0";
   #   };
-  };
+  # #   prime = {
+  # #     offload.enable = true;
+  # #     amdgpuBusId = "PCI:6:00:0"; #should be swapped
+  # #     nvidiaBusId = "PCI:1:00:0";
+  # #   };
+  # };
 
   # Enable sound.
   # sound.enable = true;
@@ -120,14 +123,16 @@ in {
     mitscheme
     mkpasswd
     networkmanager
-    nvidia-offload
+    #nvidia-offload
     pcsclite
     pcsctools
     racket
     #sqlite
     tailscale
+    tor-browser-bundle-bin
     tree
     vim
+    virt-manager
     wget
     #xorg.xbacklight
     yubikey-personalization
