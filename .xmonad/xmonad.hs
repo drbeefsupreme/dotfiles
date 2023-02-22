@@ -58,7 +58,7 @@ myEditor :: String
 myEditor = "emacsclient --createframe --alternate-editor emacs"  -- Sets emacs as editor
 
 myTerminal :: String
-myTerminal      = "alacritty"
+myTerminal      = "kitty"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
@@ -151,6 +151,9 @@ myKeys =
         , ("M-<Space>", sendMessage NextLayout) --Rotate through available layouts
         --, ("M-S-<Space>", setLayout $ XMonad.layoutHook conf) --Reset layouts to default
 
+        --Display layout
+        , ("M-S-s", spawn "~/.screenlayout/sov.sh")
+
         --Window resizing
         , ("M-n", refresh)                      --Resize viewed windows to the correct size
         , ("M-h", sendMessage Shrink)           --Shrink horiz window width
@@ -169,6 +172,9 @@ myKeys =
         , ("M-<Backspace>", promote)            --Moves focused window to master, others maintain order
         , ("M-S-<Tab>", rotSlavesDown)          --Rotate all windows except master and keep focus in place
         , ("M-C-<Tab>", rotAllDown)             --Rotate all windows in the current stack
+
+        --Dmenu shortcuts
+        , ("M-d h", spawn "dm-hub")
 
         --Volume
         , ("<XF86AudioMute>", spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
@@ -343,8 +349,10 @@ myLogHook = return ()
 
 myStartupHook :: X ()
 myStartupHook = do
+        spawnOnce "~/.screenlayout/mobile.sh"
         spawnOnce "nitrogen --restore &"
         spawnOnce "picom &" --compositor
+        spawnOnce "conky -c $HOME/.config/conky/xmonad.conkyrc"
         spawnOnce "emacs --daemon &"
         spawnOnce "flameshot &"
 
@@ -355,8 +363,8 @@ myStartupHook = do
 --
 main :: IO ()
 main = do
-  xmproc0 <- spawnPipe "xmobar -x 0 /home/poprox/.config/xmobar/xmobarrc" --launch xmobar on monitor one
-  xmproc1 <- spawnPipe "xmobar -x 1 /home/poprox/.config/xmobar/xmobarrc" --launch xmobar on monitor one
+  xmproc0 <- spawnPipe "xmobar -x 0 /home/drbeefsupreme/.config/xmobar/xmobarrc" --launch xmobar on monitor one
+  xmproc1 <- spawnPipe "xmobar -x 1 /home/drbeefsupreme/.config/xmobar/xmobarrc" --launch xmobar on monitor one
   xmonad $ docks $ ewmh defaults{ handleEventHook = handleEventHook def <+> fullscreenEventHook }
   -- ewmh defaults { ...  } is for opacity with picom
 
