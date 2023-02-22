@@ -101,7 +101,7 @@ window:
 # Font configuration
 font:
   normal:
-    family: Hack Nerd Font
+    family: "Hack"
     style: Regular
 
   # Bold font face
@@ -110,7 +110,7 @@ font:
     #
     # If the bold family is not specified, it will fall back to the
     # value specified for the normal font.
-    family: Hack Nerd Font
+    family: "Hack"
 
     # The `style` can be specified to pick a specific face.
     style: Bold
@@ -121,7 +121,7 @@ font:
     #
     # If the italic family is not specified, it will fall back to the
     # value specified for the normal font.
-    family: Hack Nerd Font
+    family: "Hack"
 
     # The `style` can be specified to pick a specific face.
     style: Italic
@@ -132,7 +132,7 @@ font:
     #
     # If the bold italic family is not specified, it will fall back to the
     # value specified for the normal font.
-    family: Hack Nerd Font
+    family: "Hack"
 
     # The `style` can be specified to pick a specific face.
     style: Bold Italic
@@ -366,7 +366,7 @@ font:
 #   - (Linux/BSD) user login shell
 #   - (Windows) powershell
 shell:
-  program: /home/poprox/.nix-profile/bin/fish
+  program: /usr/bin/fish
   args:
     - --login
 
