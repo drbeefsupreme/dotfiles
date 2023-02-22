@@ -12,7 +12,7 @@
 
 ;;loading own modules
 (load! "+bindings")
-(load! "org")
+(load! "my-org")
 
 ;;exiting a mode will not go back a character
 (setq evil-move-cursor-back nil)
@@ -31,7 +31,7 @@
 ;;     Visual        ;;
 ;;;;;;;;;;;;;;;;;;;;;;;
 
-(setq doom-font (font-spec :family "monospace" :size 14 :weight 'semi-light)
+(setq doom-font (font-spec :family "Hack" :size 14)
       doom-variable-pitch-font (font-spec :family "sans"))
 
 ;;(global-visual-line-mode 1) ;;henrik added this in as a hook with text-mode
@@ -257,7 +257,7 @@
 
 ;; (after! tramp
 ;;   (push "/usr/bin" tramp-remote-path)
-;;   (setq magit-git-executable "git")
+(setq magit-git-executable "git")
 ;;   (setq tramp-remote-path '(tramp-own-remote-path)))
 (defadvice! resolve-remote-executable ()
   :override #'+magit-optimize-process-calls-h

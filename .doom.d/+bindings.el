@@ -58,7 +58,7 @@
 ;;magit
 (map! :leader
       (:prefix-map ("g" . "git")
-      :desc "Magit status" "g" 'magit-status-with-removed-dotfiles-args
+      ;;:desc "Magit status" "g" 'magit-status-with-removed-dotfiles-args
       :desc "Magit dot file status" "d" 'dotfiles-magit-status)) ;see https://emacs.stackexchange.com/a/58859
 ;;not sure if this is also needed
 ;;(define-key! magit-file-mode-map (kbd "SPC g g") 'magit-status-with-removed-dotfiles-args)
