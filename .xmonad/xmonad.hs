@@ -58,7 +58,7 @@ myEditor :: String
 myEditor = "emacsclient --createframe --alternate-editor emacs"  -- Sets emacs as editor
 
 myTerminal :: String
-myTerminal      = "kitty"
+myTerminal      = "alacritty"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
